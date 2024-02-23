@@ -1,0 +1,21 @@
+# ninja log v5
+1	117	7303989982668564	catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-mkdir	1ee0e05c3de1c736
+1	117	7303989982668564	C:/Users/PC/Desktop/Tetris/build-TetrisConsole-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/_deps/catch2-subbuild/catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-mkdir	1ee0e05c3de1c736
+118	25131	7303990232807359	catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-download	f627689157665ed2
+118	25131	7303990232807359	C:/Users/PC/Desktop/Tetris/build-TetrisConsole-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/_deps/catch2-subbuild/catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-download	f627689157665ed2
+25131	25366	0	catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-update	f2ce0b587bb4d87a
+25131	25366	0	C:/Users/PC/Desktop/Tetris/build-TetrisConsole-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/_deps/catch2-subbuild/catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-update	f2ce0b587bb4d87a
+25366	25436	7303990235868663	catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-patch	46738996b16544a7
+25366	25436	7303990235868663	C:/Users/PC/Desktop/Tetris/build-TetrisConsole-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/_deps/catch2-subbuild/catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-patch	46738996b16544a7
+25436	25512	7303990236622948	catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-configure	9baff55c9e3702a4
+25436	25512	7303990236622948	C:/Users/PC/Desktop/Tetris/build-TetrisConsole-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/_deps/catch2-subbuild/catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-configure	9baff55c9e3702a4
+25512	25607	7303990237515437	catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-build	fe521b6e96366117
+25512	25607	7303990237515437	C:/Users/PC/Desktop/Tetris/build-TetrisConsole-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/_deps/catch2-subbuild/catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-build	fe521b6e96366117
+25607	25721	7303990238713258	catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-install	e40e01613bebe0bc
+25607	25721	7303990238713258	C:/Users/PC/Desktop/Tetris/build-TetrisConsole-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/_deps/catch2-subbuild/catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-install	e40e01613bebe0bc
+25722	25800	7303990239497773	catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-test	e3f744a8c83d15be
+25722	25800	7303990239497773	C:/Users/PC/Desktop/Tetris/build-TetrisConsole-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/_deps/catch2-subbuild/catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-test	e3f744a8c83d15be
+25800	25900	7303990240498438	CMakeFiles/catch2-populate-complete	ddf1633ce5a87eb
+25800	25900	7303990240498438	catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-done	ddf1633ce5a87eb
+25800	25900	7303990240498438	C:/Users/PC/Desktop/Tetris/build-TetrisConsole-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/_deps/catch2-subbuild/CMakeFiles/catch2-populate-complete	ddf1633ce5a87eb
+25800	25900	7303990240498438	C:/Users/PC/Desktop/Tetris/build-TetrisConsole-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/_deps/catch2-subbuild/catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-done	ddf1633ce5a87eb
