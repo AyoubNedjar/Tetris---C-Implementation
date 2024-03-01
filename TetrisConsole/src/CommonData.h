@@ -4,11 +4,11 @@
 
 enum Direction{//faire une methode dans la classe position qui prend une direction et retourne une position
 
-    LEFT(1, -1),
-    RIGHT(1, 0),
-    LOW(1, 1)
+    LEFT,
+    RIGHT,
+    LOW,
 
-    // Attributs pour les deltas
+    /*Attributs pour les deltas
     const int deltaRow;
     const int deltaColumn;
 
@@ -22,31 +22,11 @@ enum Direction{//faire une methode dans la classe position qui prend une directi
 
     int getDeltaColumn() const {
         return deltaColumn;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }*/
 
 
 };
-enum SensRotation{
+enum Rotation{
    CLOCKWISE, ANTI_CLOCKWISE
 };
 enum State{

@@ -10,6 +10,9 @@ add_executable(ProjectStructure
     Position.h Position.cpp
     Observer.h
     Observable.h Observable.cpp
+    directoryBrick/Brick.h directoryBrick/Brick.cpp
+
+
 
 
 )

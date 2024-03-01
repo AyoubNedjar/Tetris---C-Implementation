@@ -150,6 +150,12 @@ build src/CMakeFiles/ProjectStructure.dir/Observable.cpp.obj: CXX_COMPILER__Proj
   OBJECT_DIR = src\CMakeFiles\ProjectStructure.dir
   OBJECT_FILE_DIR = src\CMakeFiles\ProjectStructure.dir
 
+build src/CMakeFiles/ProjectStructure.dir/directoryBrick/Brick.cpp.obj: CXX_COMPILER__ProjectStructure_Debug C$:/Users/PC/Desktop/Tetris/TetrisConsole/src/directoryBrick/Brick.cpp || cmake_object_order_depends_target_ProjectStructure
+  DEP_FILE = src\CMakeFiles\ProjectStructure.dir\directoryBrick\Brick.cpp.obj.d
+  FLAGS = -DQT_QML_DEBUG -g -std=gnu++20
+  OBJECT_DIR = src\CMakeFiles\ProjectStructure.dir
+  OBJECT_FILE_DIR = src\CMakeFiles\ProjectStructure.dir\directoryBrick
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target ProjectStructure
@@ -158,7 +164,7 @@ build src/CMakeFiles/ProjectStructure.dir/Observable.cpp.obj: CXX_COMPILER__Proj
 #############################################
 # Link the executable src\ProjectStructure.exe
 
-build src/ProjectStructure.exe: CXX_EXECUTABLE_LINKER__ProjectStructure_Debug src/CMakeFiles/ProjectStructure.dir/main.cpp.obj src/CMakeFiles/ProjectStructure.dir/MyClass.cpp.obj src/CMakeFiles/ProjectStructure.dir/CommonData.cpp.obj src/CMakeFiles/ProjectStructure.dir/Position.cpp.obj src/CMakeFiles/ProjectStructure.dir/Observable.cpp.obj
+build src/ProjectStructure.exe: CXX_EXECUTABLE_LINKER__ProjectStructure_Debug src/CMakeFiles/ProjectStructure.dir/main.cpp.obj src/CMakeFiles/ProjectStructure.dir/MyClass.cpp.obj src/CMakeFiles/ProjectStructure.dir/CommonData.cpp.obj src/CMakeFiles/ProjectStructure.dir/Position.cpp.obj src/CMakeFiles/ProjectStructure.dir/Observable.cpp.obj src/CMakeFiles/ProjectStructure.dir/directoryBrick/Brick.cpp.obj
   FLAGS = -DQT_QML_DEBUG -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = src\CMakeFiles\ProjectStructure.dir
