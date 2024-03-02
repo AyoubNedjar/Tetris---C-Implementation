@@ -11,6 +11,11 @@ add_executable(ProjectStructure
     Observer.h
     Observable.h Observable.cpp
     directoryBrick/Brick.h directoryBrick/Brick.cpp
+    CheckRules.h CheckRules.cpp
+    Board.h Board.cpp
+    Bag.h Bag.cpp
+    View.h View.cpp
+    Game.h Game.cpp
 
 
 

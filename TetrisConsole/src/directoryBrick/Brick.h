@@ -10,7 +10,7 @@ class Brick
 {
 public:
     Brick();
-    virtual void rotate(Rotation rotation)
+    virtual void rotate(Rotation rotation);
 
 protected://car on va l utiliser dans les classes filles
     std::vector<std::vector<bool>> shapeMatrix;
