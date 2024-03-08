@@ -1,0 +1,3 @@
+C:/Users/Lukas/OneDrive/Bureau/dev4-tetris-58183-58434/build-TetrisConsole-Desktop_Qt_6_5_3_MinGW_64_bit-Debug/_deps/catch2-subbuild/CMakeFiles/catch2-populate.dir
+C:/Users/Lukas/OneDrive/Bureau/dev4-tetris-58183-58434/build-TetrisConsole-Desktop_Qt_6_5_3_MinGW_64_bit-Debug/_deps/catch2-subbuild/CMakeFiles/edit_cache.dir
+C:/Users/Lukas/OneDrive/Bureau/dev4-tetris-58183-58434/build-TetrisConsole-Desktop_Qt_6_5_3_MinGW_64_bit-Debug/_deps/catch2-subbuild/CMakeFiles/rebuild_cache.dir
