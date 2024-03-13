@@ -21,6 +21,16 @@ private:
 public:
     Game();
 
+
+
+    // Getters pour board, state et currentPosition
+    const Board& getBoard() const { return board; }
+    State getState() const { return state; }
+    Position getCurrentPosition() const { return currentPosition; }
+
+    // Setter pour state
+    void setState(State newState) { state = newState; }
+
 };
 
 #endif // GAME_H

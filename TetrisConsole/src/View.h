@@ -3,12 +3,14 @@
 
 
 
+#include "Game.h"
 class View
 {
 public:
     View();
-    void displayBoard(Game game);
-    void displayInfosGame(Game game)
+    void displayBoard(Board& board);
+    void displayInfosGame(Game& game);
+
 };
 
 #endif // VIEW_H
