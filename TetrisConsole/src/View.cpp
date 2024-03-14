@@ -3,6 +3,8 @@
 
 
 
+View::View(){};
+
 void View::displayBoard(Board& board){
 
     const std::vector<std::vector<CaseType>>& gameBoard = board.getBoard();

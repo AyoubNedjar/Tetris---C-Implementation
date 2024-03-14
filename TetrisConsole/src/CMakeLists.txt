@@ -23,6 +23,7 @@ add_executable(ProjectStructure
     directoryBrick/l.h directoryBrick/l.cpp
     directoryBrick/z.h directoryBrick/z.cpp
     directoryBrick/s.h directoryBrick/s.cpp
+    Controller.h Controller.cpp
 
 
 

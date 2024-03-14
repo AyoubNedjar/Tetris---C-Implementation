@@ -8,6 +8,8 @@ class Position
     int x;
     int y;
 public:
+
+    Position();//je crée cette position pour que game commence avc une position par defaut de la brique
     Position(int x,int y);
 
     int getX() const;

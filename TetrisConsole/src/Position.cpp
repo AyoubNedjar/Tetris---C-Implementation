@@ -2,6 +2,7 @@
 
 
 Position::Position(int x, int y): x(x), y(y){}
+Position::Position(){}
 
 int Position::getX() const {
     return x;

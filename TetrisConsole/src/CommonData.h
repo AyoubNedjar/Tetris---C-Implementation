@@ -5,7 +5,7 @@
 enum Direction{//faire une methode dans la classe position qui prend une direction et retourne une position
     LEFT,
     RIGHT,
-    LOW,
+    DOWN,
 };
 enum Rotation{
    CLOCKWISE, ANTI_CLOCKWISE

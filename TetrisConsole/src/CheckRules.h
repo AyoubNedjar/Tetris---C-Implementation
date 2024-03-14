@@ -12,6 +12,7 @@ private:
     int lineMax;
 
 public:
+    CheckRules();
     CheckRules(int scoreMax, int timeMax, int linemax);
     bool isTimeOver(int currentTime);
     bool isScoreOver(int currentScore);

@@ -4,7 +4,7 @@
 #include "..\Position.h"
 
 #include <vector>
-#include "..\CommonData.h"
+//#include "..\CommonData.h"
 
 class Brick
 {
@@ -13,7 +13,7 @@ protected:
     Position center;
 public:
     Brick();
-    virtual void rotate(Rotation rotation);
+    //virtual void rotate(Rotation rotation);
 };
 
 #endif // BRICK_H
