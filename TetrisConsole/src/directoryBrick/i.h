@@ -7,6 +7,7 @@ class I : public Brick
 {
 public:
     I();
+    virtual std::vector<Position> getPositionsTrue() override;
 };
 
 #endif // I_H

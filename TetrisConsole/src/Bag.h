@@ -6,10 +6,12 @@
 
 class Bag
 {
+private :
+    std::vector<Brick> listOfShapes;
 public:
     Bag();
     void shuffle();
-    Brick nextShape();
+    Brick& nextShape();
 
 };
 

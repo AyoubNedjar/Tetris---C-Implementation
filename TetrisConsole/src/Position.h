@@ -12,6 +12,7 @@ public:
     Position();//je crée cette position pour que game commence avc une position par defaut de la brique
     Position(int x,int y);
 
+    Position& operator+=(const Position& other);
     int getX() const;
     int getY() const;
 

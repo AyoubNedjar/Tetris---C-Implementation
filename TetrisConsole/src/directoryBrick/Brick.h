@@ -13,6 +13,7 @@ protected:
     Position center;
 public:
     Brick();
+    virtual std::vector<Position> getPositionsTrue() = 0;
     //virtual void rotate(Rotation rotation);
 };
 
