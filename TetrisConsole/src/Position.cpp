@@ -24,6 +24,24 @@ int Position::getY() const {
     return y;
 }
 
+Position Position::getPositionFromDirection(Direction dir)
+{switch (dir) {
+    case LEFT:
+        return Position(- 1, 0);
+        break;
+    case RIGHT:
+        return Position(1, 0);
+        break;
+    case DOWN:
+        return Position(0, 1);
+        break;
+    default:
+        return *this;
+        break;
+    }
+
+}
+
 void Position::setX(int x) {
     this->x = x;
 }

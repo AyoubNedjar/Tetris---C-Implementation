@@ -13,24 +13,26 @@ private:
     CheckRules rules;
     Board board;
     Bag bag;
-    Brick* currentBrick;//pointeur de brique sinon erreur car instance de brique classe abstraite non autorisée
+    std::unique_ptr<Brick> currentBrick;//pointeur intelligent
     State state;
-    Position currentPosition;
+    std::vector<Position> listOfCurrentPositions;
     bool isNewBrick;
-
-    void convertPositionsBrickToPositionsBoard(std::vector<Position> & positionsTrue, Position gap);
 
 
 public:
     Game();
-    ~Game();
+    std::vector<Position> convertStartPositionsBrickToPositionsBoard(const std::vector<Position> & positionsTrue, Position gap);
+    bool inBoard(const std::vector<Position> & positionsTrue);
+    Position addGap(const Position& p, Position gap);
+    bool hasCollisions(const std::vector<Position> & positionsInBoard);
+
     void translate(Direction d);
     void rotate(Rotation sens);
-
+    void nextShape();
+    void paintStartedBrick();
     // Getters pour board, state et currentPosition
     const Board& getBoard() const { return board; }
     State getState() const { return state; }
-    Position getCurrentPosition() const { return currentPosition; }
     //informe si on est tjrs en train de jouer avec la brique courante  ou si
     //on vient de commencer a jouer avec une brique
     bool getIsNewBrick();

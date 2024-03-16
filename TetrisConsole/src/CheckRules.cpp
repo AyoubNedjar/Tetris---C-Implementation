@@ -5,3 +5,6 @@
  * @brief CheckRules::CheckRules
  */
 CheckRules::CheckRules(){}
+
+CheckRules::CheckRules(int scoreMax, int timeMax, int lineMax):
+    scoreMax(scoreMax), timeMax(timeMax),lineMax(lineMax){};

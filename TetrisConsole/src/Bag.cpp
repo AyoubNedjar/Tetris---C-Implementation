@@ -4,21 +4,21 @@
 
 Bag::Bag(){
 
-    I i;
-    listOfShapes.push_back(i);
+      listOfShapes.push_back(std::make_unique<I>());
 }
 
 /**
  * @brief Bag::nextShape
  * @return la référence de l objet Brick
  */
-Brick& Bag::nextShape() {
-    if (listOfShapes.size() > 0) {
-        Brick* firstBrickPtr = &listOfShapes.front(); // Obtenir un pointeur vers la première brique
-        listOfShapes.erase(listOfShapes.begin());
-        return *firstBrickPtr;
-    } else {
-
-        throw std::out_of_range("Bag is Empty");
-    }
+std::unique_ptr<Brick> Bag::nextShape() {
+      if (!listOfShapes.empty()) {
+          // Déplacer le pointeur de la première brique
+          auto firstBrickPtr = std::move(listOfShapes.front());
+          listOfShapes.erase(listOfShapes.begin());
+          // Retourner le pointeur à la brique déplacée
+          return firstBrickPtr;
+      } else {
+          throw std::out_of_range("Bag is Empty");
+      }
 }

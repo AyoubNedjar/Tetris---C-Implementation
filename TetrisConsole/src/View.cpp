@@ -5,12 +5,10 @@
 
 View::View(){};
 
-void View::displayBoard(Board& board){
-
-    const std::vector<std::vector<CaseType>>& gameBoard = board.getBoard();
+void View::displayBoard(const Board& board){
 
     // Parcourir le plateau de jeu et afficher chaque case
-    for (const auto& row : gameBoard) {
+    for (const auto& row : board.getBoard()) {
         for (const auto& cell : row) {
             switch (cell) {
             case CaseType::NOT_OCCUPIED:

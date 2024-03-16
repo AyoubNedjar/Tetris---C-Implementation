@@ -3,15 +3,17 @@
 
 
 #include "directoryBrick/Brick.h"
+#include <memory>
 
 class Bag
 {
 private :
-    std::vector<Brick> listOfShapes;
+
+    std::vector<std::unique_ptr<Brick>> listOfShapes;
 public:
     Bag();
     void shuffle();
-    Brick& nextShape();
+    std::unique_ptr<Brick> nextShape();
 
 };
 

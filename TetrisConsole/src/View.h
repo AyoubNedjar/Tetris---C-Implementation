@@ -8,7 +8,7 @@ class View
 {
 public:
     View();
-    void displayBoard(Board& board);
+    void displayBoard(const Board& board);
     void displayInfosGame(Game& game);
 
 };

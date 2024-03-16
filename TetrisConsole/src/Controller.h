@@ -7,10 +7,10 @@
 class Controller
 {
 private:
-    Game game  ;
+    Game& game  ;
     View view;
 public:
-    Controller(Game g,View v);
+    Controller(Game& g,View v);
     void start();
 };
 
