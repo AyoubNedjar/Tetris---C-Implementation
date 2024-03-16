@@ -6,7 +6,10 @@ I::I():Brick() {
          {false ,false ,true ,false},
          {false ,false ,true ,false},
          {false ,false ,true ,false}};
-    }
+
+     type = CaseType::SHAPE_I;
+}
+
 
 
 /**
@@ -26,4 +29,9 @@ std::vector<Position> I::getPositionsTrue() {
         }
     }
     return truePositions;
+}
+
+const CaseType I::getType() const
+{
+    return type;
 }

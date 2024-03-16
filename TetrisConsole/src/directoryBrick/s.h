@@ -7,6 +7,8 @@ class S : public Brick
 {
 public:
     S();
+    virtual std::vector<Position> getPositionsTrue() override;
+    virtual const CaseType getType() const override;
 };
 
 #endif // S_H

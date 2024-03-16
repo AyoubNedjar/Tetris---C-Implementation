@@ -11,9 +11,14 @@ class Brick
 protected:
     std::vector<std::vector<bool>> shapeMatrix;
     Position center;
+    CaseType type;
+
 public:
     Brick();
     virtual std::vector<Position> getPositionsTrue() = 0;
+    virtual const CaseType getType() const {
+        return type;
+    }
     //virtual void rotate(Rotation rotation);
 };
 

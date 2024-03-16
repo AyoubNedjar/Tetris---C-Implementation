@@ -30,11 +30,8 @@ void Game::paintStartedBrick(){
 
     listOfCurrentPositions = convertStartPositionsBrickToPositionsBoard(listOfCurrentPositions, gap);
 
-    for(auto& p :listOfCurrentPositions){
+    board.insert(listOfCurrentPositions, currentBrick->getType());
 
-        board.insert(p, std::move(currentBrick));
-
-    }
 }
 
 /**
@@ -79,9 +76,7 @@ void Game::translate(Direction dir){
                board.deleteOldBrick(pos);
            }
 
-           for(auto& pos : newPositionsAfterDirection){
-               board.insert(pos, std::move(currentBrick));
-           }
+           board.insert(newPositionsAfterDirection, currentBrick->getType() );
 
            listOfCurrentPositions = newPositionsAfterDirection;
         }else{
@@ -91,6 +86,7 @@ void Game::translate(Direction dir){
 
         }
 }
+
 
 
 /**

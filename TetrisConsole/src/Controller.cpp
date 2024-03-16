@@ -19,9 +19,19 @@ void Controller::start(){
         std::cout<<"entré d pour descendre la piece  ";
             getline(cin, userInput);
 
+
         switch(userInput[0]){
         case 'd' :
             game.translate(Direction::DOWN);
+            break;
+
+        case 'e' :
+             game.translate(Direction::LEFT);
+            break;
+
+        case 'r' :
+            game.translate(Direction::RIGHT);
+            break;
         }
         view.displayBoard(game.getBoard());
     }while(i==0);

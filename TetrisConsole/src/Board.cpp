@@ -19,16 +19,6 @@ Board::Board():height(20), width(10){
 
 };
 
-std::map<const std::type_info*, CaseType> Board::brickTypeToCaseType = {
-    {&typeid(I), CaseType::SHAPE_I},
-    {&typeid(J), CaseType::SHAPE_J},
-    {&typeid(L), CaseType::SHAPE_L},
-    {&typeid(S), CaseType::SHAPE_S},
-    {&typeid(Square), CaseType::SHAPE_SQUARE},
-    {&typeid(T), CaseType::SHAPE_T},
-    {&typeid(Z), CaseType::SHAPE_Z}
-};
-
 /**
  * Meme chose que le consturcteur du ha
  * @brief Board::Board
@@ -51,13 +41,13 @@ bool Board::inBoard(Position p){
     return (p.getX() >= 0 && p.getX() < getHeight() && p.getY() >= 0 && p.getY() < getWidth()) ;
 }
 
-void Board::insert(Position p,  std::unique_ptr<Brick> b)
+void Board::insert(const std::vector<Position> & listPositions, CaseType type)
 {
-    //auto it  = brickTypeToCaseType.find(&typeid(*b));//je lui donne l objet pointé et il trouve les infos de ce type
-    //if (it != brickTypeToCaseType.end()) {
-        // Insérer la brique dans le tableau en utilisant le type de case correspondant
-        //board[p.getY()][p.getX()] = CaseType::SHAPE_I;//it->second;
-    board[p.getX()][p.getY()] = CaseType::SHAPE_I;
+
+    for (auto& p : listPositions) {
+        board[p.getX()][p.getY()] = type;
+    }
+
     //}
 }
 

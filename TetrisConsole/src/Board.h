@@ -13,7 +13,7 @@ private :
     int height;
     int width;
     std::vector<std::vector<CaseType>> board;
-    static std::map<const std::type_info*, CaseType> brickTypeToCaseType;
+
 
 
 public:
@@ -25,7 +25,7 @@ public:
     void removeCompletesLines(std::vector<int> linesList);//va supprimer les lignes complete, ce qui
     //veut dire de faire un decallage des brique en glissant tt les blacks du dessus vers le bas
 
-    void insert(Position p, std::unique_ptr<Brick> b);
+    void insert(const std::vector<Position> & listOfPositions , CaseType type);
     void deleteOldBrick(Position p);
 
     CaseType getType(Position p);
