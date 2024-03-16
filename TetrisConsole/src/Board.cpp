@@ -53,11 +53,17 @@ bool Board::inBoard(Position p){
 
 void Board::insert(Position p,  std::unique_ptr<Brick> b)
 {
-    auto it  = brickTypeToCaseType.find(&typeid(*b));//je lui donne l objet pointé et il trouve les infos de ce type
-    if (it != brickTypeToCaseType.end()) {
+    //auto it  = brickTypeToCaseType.find(&typeid(*b));//je lui donne l objet pointé et il trouve les infos de ce type
+    //if (it != brickTypeToCaseType.end()) {
         // Insérer la brique dans le tableau en utilisant le type de case correspondant
-        board[p.getY()][p.getX()] = CaseType::SHAPE_I;//it->second;
-    }
+        //board[p.getY()][p.getX()] = CaseType::SHAPE_I;//it->second;
+    board[p.getX()][p.getY()] = CaseType::SHAPE_I;
+    //}
+}
+
+void Board::deleteOldBrick(Position p)
+{
+    board[p.getX()][p.getY()] = CaseType::NOT_OCCUPIED;
 }
 
 CaseType Board::getType(Position p)

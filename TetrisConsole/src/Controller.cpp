@@ -1,6 +1,8 @@
 #include "Controller.h"
 #include <iostream>
 
+using namespace std;
+
 Controller::Controller(Game& g, View v): game(g), view(v){};
 
 /**
@@ -9,18 +11,20 @@ Controller::Controller(Game& g, View v): game(g), view(v){};
  */
 void Controller::start(){
 
-    char userInput;
+    string userInput;
     std::cout<<"bienvenue voici le board ";
     view.displayBoard(game.getBoard());
+    int i = 0;
+    do{
+        std::cout<<"entré d pour descendre la piece  ";
+            getline(cin, userInput);
 
-    std::cout<<"entré d pour descendre la piece  ";
-    std::cin >> userInput;
-
-    switch(userInput){
-    case 'd' :
-        game.translate(Direction::DOWN);
-    }
-    view.displayBoard(game.getBoard());
+        switch(userInput[0]){
+        case 'd' :
+            game.translate(Direction::DOWN);
+        }
+        view.displayBoard(game.getBoard());
+    }while(i==0);
 
 }
 

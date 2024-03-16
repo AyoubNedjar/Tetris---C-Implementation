@@ -16,6 +16,12 @@ Position& Position::operator+=(const Position& other) {
     return *this;
 }
 
+bool Position::operator==(const Position &other) const
+{
+    return (x == other.x) && (y == other.y);
+
+}
+
 int Position::getX() const {
     return x;
 }
@@ -25,15 +31,16 @@ int Position::getY() const {
 }
 
 Position Position::getPositionFromDirection(Direction dir)
-{switch (dir) {
+{
+    switch (dir) {
     case LEFT:
-        return Position(- 1, 0);
+        return Position(0, -1);
         break;
     case RIGHT:
-        return Position(1, 0);
+        return Position(0, 1);
         break;
     case DOWN:
-        return Position(0, 1);
+        return Position(1, 0);
         break;
     default:
         return *this;

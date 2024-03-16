@@ -26,6 +26,7 @@ public:
     //veut dire de faire un decallage des brique en glissant tt les blacks du dessus vers le bas
 
     void insert(Position p, std::unique_ptr<Brick> b);
+    void deleteOldBrick(Position p);
 
     CaseType getType(Position p);
     const int getHeight() const;;

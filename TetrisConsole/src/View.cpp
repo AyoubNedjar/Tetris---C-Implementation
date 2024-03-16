@@ -7,6 +7,7 @@ View::View(){};
 
 void View::displayBoard(const Board& board){
 
+    std::cout<<std::endl;
     // Parcourir le plateau de jeu et afficher chaque case
     for (const auto& row : board.getBoard()) {
         for (const auto& cell : row) {

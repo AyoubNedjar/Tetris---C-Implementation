@@ -8,6 +8,7 @@ I::I():Brick() {
          {false ,false ,true ,false}};
     }
 
+
 /**
  * cette methode va nous renvoyer les positions des true de la brique
  * @brief I::getPositionsTrue

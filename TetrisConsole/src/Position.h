@@ -13,6 +13,8 @@ public:
     Position(int x,int y);
 
     Position& operator+=(const Position& other);
+
+    bool operator==(const Position& other) const;
     int getX() const;
     int getY() const;
 

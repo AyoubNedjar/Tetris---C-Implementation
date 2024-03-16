@@ -25,6 +25,7 @@ public:
     bool inBoard(const std::vector<Position> & positionsTrue);
     Position addGap(const Position& p, Position gap);
     bool hasCollisions(const std::vector<Position> & positionsInBoard);
+    std::vector<Position> posWithoutOldPos(const std::vector<Position> & newPositionsInBoard);
 
     void translate(Direction d);
     void rotate(Rotation sens);

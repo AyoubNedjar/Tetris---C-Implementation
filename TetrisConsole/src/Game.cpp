@@ -13,18 +13,7 @@
 Game::Game(): rules(10, 10, 10), state(State::PLAYING){
 
     currentBrick = bag.nextShape();
-
-    listOfCurrentPositions = currentBrick->getPositionsTrue();
-    Position inputPosition(0, board.getWidth()/2);
-    Position gap((inputPosition.getX()-listOfCurrentPositions.front().getX()),
-                 (inputPosition.getY()-listOfCurrentPositions.front().getY()));
-
-    listOfCurrentPositions = convertStartPositionsBrickToPositionsBoard(listOfCurrentPositions, gap);
-
-    for(auto& p :listOfCurrentPositions){
-
-        board.insert(p, std::move(currentBrick));
-    }
+    paintStartedBrick();
 }
 
 /**
@@ -34,6 +23,7 @@ Game::Game(): rules(10, 10, 10), state(State::PLAYING){
  */
 void Game::paintStartedBrick(){
 
+    listOfCurrentPositions = currentBrick->getPositionsTrue();
     Position inputPosition(0, board.getWidth()/2);
     Position gap((inputPosition.getX()-listOfCurrentPositions.front().getX()),
                  (inputPosition.getY()-listOfCurrentPositions.front().getY()));
@@ -56,8 +46,7 @@ void Game::nextShape(){
     std::unique_ptr<Brick> nextBrickPtr = bag.nextShape();
 
     //tranfert de propriété avec pointeur intelligent pour que current brique pointe vers la prochaine
-   currentBrick = std::move(nextBrickPtr);
-   listOfCurrentPositions = currentBrick->getPositionsTrue();
+    currentBrick = std::move(nextBrickPtr);
     paintStartedBrick();
 
 }
@@ -83,10 +72,13 @@ void Game::translate(Direction dir){
 
         }
 
-        if(!inBoard(newPositionsAfterDirection)){
-           throw std::out_of_range("Position is out of board bounds");
-        }
-        if(!hasCollisions(newPositionsAfterDirection)){//
+
+        if(inBoard(newPositionsAfterDirection) && !hasCollisions(posWithoutOldPos(newPositionsAfterDirection))){
+
+           for(auto& pos : listOfCurrentPositions){
+               board.deleteOldBrick(pos);
+           }
+
            for(auto& pos : newPositionsAfterDirection){
                board.insert(pos, std::move(currentBrick));
            }
@@ -94,10 +86,41 @@ void Game::translate(Direction dir){
            listOfCurrentPositions = newPositionsAfterDirection;
         }else{
            //si il y a collision on change de piece
+
             nextShape();
 
         }
+}
 
+
+/**
+ * retourne les positons rééelles du plateau sans les ancienne sinon on recompare les même
+ * @brief Game::posWithoutOldPos
+ * @param newPositionsInBoard
+ * @return
+ */
+std::vector<Position> Game::posWithoutOldPos(const std::vector<Position> &newPositionsInBoard)
+{
+        std::vector<Position> realNewPositions;
+
+        for (const auto& newPos : newPositionsInBoard) {
+            bool isNew = true;
+
+            // Vérifier si la nouvelle position est déjà dans la liste actuelle
+            for (const auto& oldPos : listOfCurrentPositions) {
+               if (newPos == oldPos) {
+                   isNew = false;
+                   break;
+               }
+            }
+
+            // Si la nouvelle position n'est pas dans la liste actuelle, l'ajouter à la liste des nouvelles positions
+            if (isNew) {
+               realNewPositions.push_back(newPos);
+            }
+        }
+
+        return realNewPositions;
 }
 
 /**
@@ -156,6 +179,8 @@ bool Game::hasCollisions(const std::vector<Position> & positionsInBoard){
 
     return false;
 }
+
+
 
 
 
