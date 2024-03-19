@@ -22,8 +22,10 @@ public:
 
     bool inBoard(Position pos);
     std::vector<int> getCompleteLines();//va retourner les lines completes
-    void removeCompletesLines(std::vector<int> linesList);//va supprimer les lignes complete, ce qui
+    void removeCompletesLines(const std::vector<int> &linesList);//va supprimer les lignes complete, ce qui
     //veut dire de faire un decallage des brique en glissant tt les blacks du dessus vers le bas
+
+    void updateCompleteLines();
 
     void insert(const std::vector<Position> & listOfPositions , CaseType type);
     void deleteOldBrick(Position p);

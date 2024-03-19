@@ -12,6 +12,7 @@ Controller::Controller(Game& g, View v): game(g), view(v){};
  * @brief Controller::update
  */
 void Controller::update(){
+
     view.displayBoard(game.getBoard());
 }
 

@@ -6,6 +6,7 @@
 View::View(){};
 
 void View::displayBoard(const Board& board){
+
     std::cout << std::endl;
 
 

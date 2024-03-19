@@ -14,7 +14,7 @@
  * lignes et crée un vecteur interne pour chaque ligne avec width éléments.
  * @brief Board::Board
  */
-Board::Board():height(20), width(15){
+Board::Board():height(20), width(8){
     board.resize(height, std::vector<CaseType>(width, CaseType::NOT_OCCUPIED));
 
 };
@@ -39,6 +39,46 @@ Board::Board(int height,int width):height(height), width(width){
  */
 bool Board::inBoard(Position p){
     return (p.getX() >= 0 && p.getX() < getHeight() && p.getY() >= 0 && p.getY() < getWidth()) ;
+}
+
+std::vector<int> Board::getCompleteLines()
+{
+    std::vector<int> completeLines;
+    int cpt  = 0;
+    int lineNumber = 0;
+    for(auto& row : board){
+        for(auto& cell : row){
+            if(cell != CaseType::NOT_OCCUPIED){
+                cpt++;
+            }
+        }
+        if(cpt==row.size()){
+            completeLines.push_back(lineNumber);
+        }
+        cpt=0;
+        lineNumber++;
+    }
+
+    return completeLines;
+}
+
+void Board::removeCompletesLines(const std::vector<int> & linesList)
+{
+    for (int line : linesList) {
+        // Décalage des lignes au-dessus vers le bas
+        for (int i = line; i > 0; --i) {
+            board[i] = board[i - 1];
+        }
+        // Remplacement de la première ligne par une nouvelle ligne vide
+        board[0] = std::vector<CaseType>(getWidth(), CaseType::NOT_OCCUPIED);
+    }
+
+}
+
+void Board::updateCompleteLines()
+{
+
+    removeCompletesLines(getCompleteLines());
 }
 
 void Board::insert(const std::vector<Position> & listPositions, CaseType type)

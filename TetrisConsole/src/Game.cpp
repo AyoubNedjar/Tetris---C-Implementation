@@ -84,7 +84,10 @@ void Game::translate(Direction dir){
 
            listOfCurrentPositions = newPositionsAfterDirection;
         }else{
-           //si il y a collision on change de piece
+           //avant de passe a la brique suivante on doit mettre a jour le board
+           //cad verifier si il faut supprimer les lignes remplies
+
+           board.updateCompleteLines();
 
             nextShape();
 
