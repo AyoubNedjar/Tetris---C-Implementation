@@ -5,6 +5,17 @@ using namespace std;
 
 Controller::Controller(Game& g, View v): game(g), view(v){};
 
+
+/**
+ * va etre executer quand rotate , translate vont etre excuter car ils auront notifier le controller et
+ * ce dernier executera la methode update
+ * @brief Controller::update
+ */
+void Controller::update(){
+    view.displayBoard(game.getBoard());
+}
+
+
 /**
  * Ici il y aura le boucle de jeu
  * @brief Controller::start
@@ -33,7 +44,6 @@ void Controller::start(){
             game.translate(Direction::RIGHT);
             break;
         }
-        view.displayBoard(game.getBoard());
     }while(i==0);
 
 }

@@ -6,10 +6,20 @@
 View::View(){};
 
 void View::displayBoard(const Board& board){
+    std::cout << std::endl;
 
-    std::cout<<std::endl;
+
     // Parcourir le plateau de jeu et afficher chaque case
+    int rowIndex = 1;
     for (const auto& row : board.getBoard()) {
+
+        if(rowIndex>9){
+            std::cout << rowIndex << "|";
+        }else{
+            std::cout <<" "<< rowIndex << "|";
+        }
+
+
         for (const auto& cell : row) {
             switch (cell) {
             case CaseType::NOT_OCCUPIED:
@@ -18,7 +28,6 @@ void View::displayBoard(const Board& board){
             case CaseType::SHAPE_I:
                 std::cout << " I|";
                 break;
-
             case CaseType::SHAPE_J:
                 std::cout << " J|";
                 break;
@@ -29,7 +38,7 @@ void View::displayBoard(const Board& board){
                 std::cout << " L|";
                 break;
             case CaseType::SHAPE_SQUARE:
-                std::cout << " []";
+                std::cout << " #|";
                 break;
             case CaseType::SHAPE_T:
                 std::cout << " T|";
@@ -41,8 +50,21 @@ void View::displayBoard(const Board& board){
         }
         // Saut de ligne à la fin de chaque ligne du plateau
         std::cout << std::endl;
+        ++rowIndex;
     }
-
-
+    // Affichage des indices de colonnes
+    std::cout << "  ";
+    for (int col = 1; col <= board.getWidth(); ++col) {
+        if(col>9){
+            std::cout<< col<< " ";
+        }else if(col==9){
+            std::cout << " " <<col<< "  ";
+        }else{
+            std::cout << " " <<col<< " ";
+        }
+    }
+    std::cout << std::endl;
+    std::cout <<"-----------------------------" <<std::endl;
 
 }
+

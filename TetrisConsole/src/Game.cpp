@@ -70,6 +70,10 @@ void Game::translate(Direction dir){
         }
 
 
+        /*
+         *si les procaines positions se trouventd dans le board et que il n y a pas de collisions aux prochaines nouvelles positions
+         *alors on peut les placer sinon on passe a la prochaine brique
+         */
         if(inBoard(newPositionsAfterDirection) && !hasCollisions(posWithoutOldPos(newPositionsAfterDirection))){
 
            for(auto& pos : listOfCurrentPositions){
@@ -85,6 +89,7 @@ void Game::translate(Direction dir){
             nextShape();
 
         }
+        notifyObservers();
 }
 
 
@@ -175,8 +180,6 @@ bool Game::hasCollisions(const std::vector<Position> & positionsInBoard){
 
     return false;
 }
-
-
 
 
 

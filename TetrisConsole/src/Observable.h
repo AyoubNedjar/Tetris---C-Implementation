@@ -9,8 +9,8 @@ class Observable
 {
 public:
    virtual  ~Observable()= default;
-   void addObserver(Observer * observer);
-   void removeObserver(Observer * observer);
+   virtual void addObserver(Observer * observer) final;
+   virtual void removeObserver(Observer * observer) final ;
    void notifyObservers() const;//const car pas de modif
 
 private:

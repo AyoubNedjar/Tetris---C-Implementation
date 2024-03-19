@@ -14,7 +14,7 @@
  * lignes et crée un vecteur interne pour chaque ligne avec width éléments.
  * @brief Board::Board
  */
-Board::Board():height(20), width(10){
+Board::Board():height(20), width(15){
     board.resize(height, std::vector<CaseType>(width, CaseType::NOT_OCCUPIED));
 
 };

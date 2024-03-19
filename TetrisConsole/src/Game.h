@@ -4,9 +4,10 @@
 
 #include "Bag.h"
 #include "CheckRules.h"
+#include "Observable.h"
 #include "directoryBrick/Brick.h"
 #include "CommonData.h"
-class Game
+class Game: public Observable
 {
 
 private:
@@ -16,11 +17,12 @@ private:
     std::unique_ptr<Brick> currentBrick;//pointeur intelligent
     State state;
     std::vector<Position> listOfCurrentPositions;
-    bool isNewBrick;
 
 
 public:
     Game();
+
+
     std::vector<Position> convertStartPositionsBrickToPositionsBoard(const std::vector<Position> & positionsTrue, Position gap);
     bool inBoard(const std::vector<Position> & positionsTrue);
     Position addGap(const Position& p, Position gap);
@@ -32,14 +34,11 @@ public:
     void rotate(Rotation sens);
     void nextShape();
     void paintStartedBrick();
-    // Getters pour board, state et currentPosition
+
     const Board& getBoard() const { return board; }
     State getState() const { return state; }
-    //informe si on est tjrs en train de jouer avec la brique courante  ou si
-    //on vient de commencer a jouer avec une brique
-    bool getIsNewBrick();
 
-    // Setter pour state
+
     void setState(State newState) { state = newState; }
 
 };

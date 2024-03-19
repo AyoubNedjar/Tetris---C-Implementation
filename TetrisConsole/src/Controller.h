@@ -3,8 +3,9 @@
 
 
 #include "Game.h"
+#include "Observer.h"
 #include "View.h"
-class Controller
+class Controller: public Observer
 {
 private:
     Game& game  ;
@@ -12,6 +13,7 @@ private:
 public:
     Controller(Game& g,View v);
     void start();
+    void update() override;
 };
 
 #endif // CONTROLLER_H
