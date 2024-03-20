@@ -1,6 +1,5 @@
-
-
 #include "Game.h"
+#include <ostream>
 #include <stdexcept>
 
 /**
@@ -183,16 +182,19 @@ bool Game::hasCollisions(const std::vector<Position> & positionsInBoard){
 
     return false;
 }
+void Game::rotate(Rotation sens){
+    std::vector<Position> newPositionsAfterRotation;
 
+    currentBrick->rotate(sens);
+    newPositionsAfterRotation = currentBrick->getPositionsTrue();
 
+    for(auto& pos : listOfCurrentPositions){
+        board.deleteOldBrick(pos);
+    }
+    board.insert(newPositionsAfterRotation, currentBrick->getType());
 
-
-
-
-
-
-
-
-
-
-
+    for (auto p: listOfCurrentPositions){
+        std::cout << p.getX() << " " << p.getY() << std::endl ;
+    }
+    notifyObservers();
+}

@@ -44,6 +44,10 @@ void Controller::start(){
         case 'r' :
             game.translate(Direction::RIGHT);
             break;
+
+        case 't' :
+            game.rotate(Rotation::ANTI_CLOCKWISE);
+            break;
         }
     }while(i==0);
 

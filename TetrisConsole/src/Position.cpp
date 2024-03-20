@@ -29,7 +29,6 @@ int Position::getX() const {
 int Position::getY() const {
     return y;
 }
-
 Position Position::getPositionFromDirection(Direction dir)
 {
     switch (dir) {

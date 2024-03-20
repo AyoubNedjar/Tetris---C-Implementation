@@ -13,8 +13,8 @@
 Bag::Bag(){
 
 
-    listOfShapes.push_back(std::make_unique<Square>());
-     listOfShapes.push_back(std::make_unique<I>());
+    //listOfShapes.push_back(std::make_unique<Square>());
+    listOfShapes.push_back(std::make_unique<I>());
     listOfShapes.push_back(std::make_unique<Square>());
     listOfShapes.push_back(std::make_unique<Square>());
     listOfShapes.push_back(std::make_unique<Square>());

@@ -8,6 +8,10 @@
 
 class Brick
 {
+private :
+    virtual void transpose();
+    virtual void reverseColumns();
+
 protected:
     std::vector<std::vector<bool>> shapeMatrix;
     Position center;
@@ -15,11 +19,9 @@ protected:
 
 public:
     Brick();
-    virtual std::vector<Position> getPositionsTrue() = 0;
-    virtual const CaseType getType() const {
-        return type;
-    }
-    //virtual void rotate(Rotation rotation);
+    virtual std::vector<Position> getPositionsTrue();
+    virtual const CaseType getType() const ;
+    virtual void rotate(Rotation rotation);
 };
 
 #endif // BRICK_H

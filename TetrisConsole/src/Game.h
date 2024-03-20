@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-
+#include <iostream>
 #include "Bag.h"
 #include "CheckRules.h"
 #include "Observable.h"
@@ -28,7 +28,6 @@ public:
     Position addGap(const Position& p, Position gap);
     bool hasCollisions(const std::vector<Position> & positionsInBoard);
     std::vector<Position> posWithoutOldPos(const std::vector<Position> & newPositionsInBoard);
-
 
     void translate(Direction d);
     void rotate(Rotation sens);

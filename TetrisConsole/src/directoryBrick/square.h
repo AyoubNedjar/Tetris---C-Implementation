@@ -7,8 +7,9 @@ class Square : public Brick
 {
 public:
     Square();
-    virtual std::vector<Position> getPositionsTrue() override;
-    virtual const CaseType getType() const override;
+    // virtual std::vector<Position> getPositionsTrue() override;
+    const CaseType getType() const override;
+    virtual void rotate(Rotation sens) override;
 };
 
 #endif // SQUARE_H
