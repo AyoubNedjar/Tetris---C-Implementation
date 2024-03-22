@@ -11,6 +11,7 @@
  */
 Game::Game(): rules(10, 10, 10), state(State::PLAYING){
 
+    canDrop = true;
     currentBrick = bag.nextShape();
     paintStartedBrick();
 }
@@ -48,6 +49,21 @@ void Game::checkState()
 
 }
 
+const int Game::getScore() const
+{
+    return 2;
+}
+
+const void Game::setScore(int newScore)
+{
+    score = newScore;
+}
+
+const bool Game::getCanDrop()
+{
+    return canDrop;
+}
+
 /**
  * va récupérer un nouvelle brique du sac pour la mettre brique courante
  * @brief Game::nextShape
@@ -59,11 +75,11 @@ void Game::nextShape(){
     //tranfert de propriété avec pointeur intelligent pour que current brique pointe vers la prochaine
     currentBrick = std::move(nextBrickPtr);
     paintStartedBrick();
-
+    canDrop = false;
 }
 
 
-void Game::translate(Direction dir){
+void Game::translateWithDropOrNot(Direction dir, bool WithDrop){
 
     /*if(!inBoard(listOfCurrentPositions)){
             throw std::out_of_range("Position is out of board bounds");
@@ -99,7 +115,10 @@ void Game::translate(Direction dir){
     }
 
 
-    notifyObservers();
+    if(!WithDrop){
+        notifyObservers();
+    }
+
 }
 
 void Game::rotate(Rotation sens){
@@ -121,7 +140,11 @@ void Game::rotate(Rotation sens){
 
 void Game::drop()
 {
-
+    while(canDrop){
+        translateWithDropOrNot(Direction::DOWN, true);
+    }
+    canDrop = true;
+    notifyObservers();
 }
 
 bool Game::applyTransformationAndCheckForValidPositions(const std::vector<Position> &newPositions)

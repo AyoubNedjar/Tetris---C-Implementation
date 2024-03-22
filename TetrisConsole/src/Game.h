@@ -18,6 +18,7 @@ private:
     State state;
     std::vector<Position> listOfCurrentPositions;
     int score;
+    bool canDrop;
 
 
 
@@ -35,17 +36,19 @@ public:
     bool inBoardWidth(const std::vector<Position> & positionsTrue);
     bool inBoardHeight(const std::vector<Position> & positionsTrue);
 
-    void translate(Direction d);
+    void translateWithDropOrNot(Direction d, bool withDrop);
     void rotate(Rotation sens);
     void drop();
     void nextShape();
     void paintStartedBrick();
 
-
     void checkState();
 
+    const int getScore() const;
+    const void setScore(int newScore);
     const Board& getBoard() const { return board; }
     State getState() const { return state; }
+    const bool getCanDrop();
 
 
     void setState(State newState) { state = newState; }

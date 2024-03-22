@@ -53,7 +53,7 @@ void disableRawMode() {
 int main()
 {
 
-  // enableRawMode();
+  enableRawMode();
     Game g;
     View v;
     Controller c(g, v);
@@ -61,7 +61,7 @@ int main()
     g.addObserver(&c);
 
     c.start();
-   // disableRawMode();
+   disableRawMode();
 
     return 0;
 }

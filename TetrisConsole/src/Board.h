@@ -32,6 +32,7 @@ public:
     void insert(const std::vector<Position> & listOfPositions , CaseType type);
     void deleteOldBrick(Position p);
 
+    const int getLines() const;
     CaseType getType(Position p);
     const int getHeight() const;;
     const int getWidth() const;

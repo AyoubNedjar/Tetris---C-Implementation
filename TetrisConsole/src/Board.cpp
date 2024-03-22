@@ -94,6 +94,20 @@ void Board::deleteOldBrick(Position p)
     board[p.getX()][p.getY()] = CaseType::NOT_OCCUPIED;
 }
 
+const int Board::getLines() const
+{
+    int cpt = 0;
+    for(auto& row : board){
+        for(auto& cell : row){
+            if(cell!=CaseType::NOT_OCCUPIED){
+                cpt++;
+                break;
+            }
+        }
+    }
+    return cpt;
+}
+
 CaseType Board::getType(Position p)
 {
     return board[p.getX()][p.getY()];
