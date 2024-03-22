@@ -15,6 +15,8 @@ Game::Game(): rules(10, 10, 10), state(State::PLAYING){
     paintStartedBrick();
 }
 
+
+
 /**
  *
  * va dessiner la forme au tout debut du tableau
@@ -30,6 +32,19 @@ void Game::paintStartedBrick(){
     listOfCurrentPositions = convertStartPositionsBrickToPositionsBoard(listOfCurrentPositions, gap);
 
     board.insert(listOfCurrentPositions, currentBrick->getType());
+
+}
+
+/**
+ * va checker si on respecte toujours les regles de jeu pour mettre a jour l'état de jeu
+ * @brief Game::checkState
+ */
+void Game::checkState()
+{
+    //we don't use the methode for the time in this poject in console mode
+    if(rules.isLineComplete(board) || rules.isScoreOver(score)){
+        setState(State::LOST);
+    }
 
 }
 
@@ -68,30 +83,54 @@ void Game::translate(Direction dir){
 
         }
 
-
         /*
          *si les procaines positions se trouventd dans le board et que il n y a pas de collisions aux prochaines nouvelles positions
          *alors on peut les placer sinon on passe a la prochaine brique
          */
-        if(inBoard(newPositionsAfterDirection) && !hasCollisions(posWithoutOldPos(newPositionsAfterDirection))){
+        applyTransformationAndCheckForValidPositions(newPositionsAfterDirection);
+        notifyObservers();
+}
 
-           for(auto& pos : listOfCurrentPositions){
+void Game::rotate(Rotation sens){
+        std::vector<Position> rotatePositionsInBrick;
+        std::vector<Position> newPositionsAfterRotate;
+
+        currentBrick->rotate(sens);
+        rotatePositionsInBrick= currentBrick->getPositionsTrue();
+
+        //c'est le decalage ou le delta entre une pos occupée par la brique courante et une pos de la meme brique retourné
+        Position gapBetweenPosCurrentAndPosInBrick(
+            listOfCurrentPositions.front().getX() - rotatePositionsInBrick.front().getX(),
+            listOfCurrentPositions.front().getY() - rotatePositionsInBrick.front().getY());
+
+        newPositionsAfterRotate = convertPositionsInBoardForRotate(rotatePositionsInBrick, gapBetweenPosCurrentAndPosInBrick);
+        applyTransformationAndCheckForValidPositions(newPositionsAfterRotate);
+        notifyObservers();
+}
+
+void Game::drop()
+{
+        while (true) {
+            translate(Direction::DOWN);
+        }
+}
+
+void Game::applyTransformationAndCheckForValidPositions(const std::vector<Position> &newPositions)
+{
+        if(inBoard(newPositions) && !hasCollisions(posWithoutOldPos(newPositions))){
+            for(auto& pos : listOfCurrentPositions){
                board.deleteOldBrick(pos);
-           }
+            }
 
-           board.insert(newPositionsAfterDirection, currentBrick->getType() );
+            board.insert(newPositions, currentBrick->getType() );
+            listOfCurrentPositions = newPositions;
 
-           listOfCurrentPositions = newPositionsAfterDirection;
+
         }else{
-           //avant de passe a la brique suivante on doit mettre a jour le board
-           //cad verifier si il faut supprimer les lignes remplies
-
-           board.updateCompleteLines();
-
+            board.updateCompleteLines();
             nextShape();
 
         }
-        notifyObservers();
 }
 
 
@@ -127,13 +166,22 @@ std::vector<Position> Game::posWithoutOldPos(const std::vector<Position> &newPos
 }
 
 /**
- * retourne une position
+ * retourne une nouvelles position à laquelle on a ajouter un delta(décalage)
  * @brief addGap
  */
 Position Game::addGap(const Position& p, Position gap){
     return Position(p.getX()+gap.getX(), p.getY()+gap.getY());
 }
 
+
+std::vector<Position> Game::addGapForTotalityOfList(const std::vector<Position> &positionsTrue, Position gap)
+{
+    std::vector<Position> copiePositionsTrue;
+    for (auto& position : positionsTrue) {
+            copiePositionsTrue.push_back(addGap(position, gap));
+    }
+    return copiePositionsTrue;
+}
 /**
  * va renvoyer les positions de départ briques sur la plateau
  * @brief convertPositionsBrickToPositionsBoard
@@ -141,12 +189,15 @@ Position Game::addGap(const Position& p, Position gap){
  * @param gap
  */
 std::vector<Position> Game::convertStartPositionsBrickToPositionsBoard(const std::vector<Position>& positionsTrue, Position gap){
-    std::vector<Position> copiePositionsTrue;
-    for (auto& position : positionsTrue) {
-        copiePositionsTrue.push_back(addGap(position, gap));
-    }
-    return copiePositionsTrue;
+    return addGapForTotalityOfList(positionsTrue, gap);
 }
+
+std::vector<Position> Game::convertPositionsInBoardForRotate(const std::vector<Position> &positionsTrue, Position gap)
+{
+    return addGapForTotalityOfList(positionsTrue, gap);
+}
+
+
 
 /**
  * verifie si les positions sont sur le plateau
@@ -182,19 +233,4 @@ bool Game::hasCollisions(const std::vector<Position> & positionsInBoard){
 
     return false;
 }
-void Game::rotate(Rotation sens){
-    std::vector<Position> newPositionsAfterRotation;
 
-    currentBrick->rotate(sens);
-    newPositionsAfterRotation = currentBrick->getPositionsTrue();
-
-    for(auto& pos : listOfCurrentPositions){
-        board.deleteOldBrick(pos);
-    }
-    board.insert(newPositionsAfterRotation, currentBrick->getType());
-
-    for (auto p: listOfCurrentPositions){
-        std::cout << p.getX() << " " << p.getY() << std::endl ;
-    }
-    notifyObservers();
-}

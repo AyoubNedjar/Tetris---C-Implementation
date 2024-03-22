@@ -16,7 +16,7 @@ public:
     CheckRules(int scoreMax, int timeMax, int linemax);
     bool isTimeOver(int currentTime);
     bool isScoreOver(int currentScore);
-    bool isLineComplete(Board board);
+    bool isLineComplete(Board& board);
 
 
 };

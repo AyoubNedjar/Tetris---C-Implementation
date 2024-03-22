@@ -17,13 +17,19 @@ private:
     std::unique_ptr<Brick> currentBrick;//pointeur intelligent
     State state;
     std::vector<Position> listOfCurrentPositions;
+    int score;
+
 
 
 public:
     Game();
 
 
+
+    std::vector<Position> addGapForTotalityOfList(const std::vector<Position> & positionsTrue, Position gap);
     std::vector<Position> convertStartPositionsBrickToPositionsBoard(const std::vector<Position> & positionsTrue, Position gap);
+    std::vector<Position> convertPositionsInBoardForRotate(const std::vector<Position> & positionsTrue, Position gap);
+    void applyTransformationAndCheckForValidPositions(const std::vector<Position> & newPositions);
     bool inBoard(const std::vector<Position> & positionsTrue);
     Position addGap(const Position& p, Position gap);
     bool hasCollisions(const std::vector<Position> & positionsInBoard);
@@ -31,8 +37,12 @@ public:
 
     void translate(Direction d);
     void rotate(Rotation sens);
+    void drop();
     void nextShape();
     void paintStartedBrick();
+
+
+    void checkState();
 
     const Board& getBoard() const { return board; }
     State getState() const { return state; }

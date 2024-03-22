@@ -7,4 +7,14 @@
 CheckRules::CheckRules(){}
 
 CheckRules::CheckRules(int scoreMax, int timeMax, int lineMax):
-    scoreMax(scoreMax), timeMax(timeMax),lineMax(lineMax){};
+    scoreMax(scoreMax), timeMax(timeMax),lineMax(lineMax){}
+
+bool CheckRules::isScoreOver(int currentScore)
+{
+    return (currentScore>scoreMax);
+}
+
+bool CheckRules::isLineComplete(Board &board)
+    {
+    return true;
+    };

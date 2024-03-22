@@ -1,12 +1,6 @@
 #include "Board.h"
 #include "CommonData.h"
-#include "directoryBrick/i.h"
-#include "directoryBrick/j.h"
-#include "directoryBrick/l.h"
-#include "directoryBrick/s.h"
-#include "directoryBrick/square.h"
-#include "directoryBrick/t.h"
-#include "directoryBrick/z.h"
+
 
 
 /**
@@ -14,7 +8,7 @@
  * lignes et crée un vecteur interne pour chaque ligne avec width éléments.
  * @brief Board::Board
  */
-Board::Board():height(20), width(8){
+Board::Board():height(20), width(4){
     board.resize(height, std::vector<CaseType>(width, CaseType::NOT_OCCUPIED));
 
 };
