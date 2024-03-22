@@ -12,7 +12,6 @@ Controller::Controller(Game& g, View v): game(g), view(v){};
  * @brief Controller::update
  */
 void Controller::update(){
-
     view.displayBoard(game.getBoard());
 }
 
@@ -22,17 +21,15 @@ void Controller::update(){
  */
 void Controller::start(){
 
-    char userInput;
+    string userInput;
     std::cout<<"bienvenue voici le board ";
     view.displayBoard(game.getBoard());
     int i = 0;
     do{
         std::cout<<"entré d pour descendre la piece  ";
-           // getline(cin, userInput);
+            getline(cin, userInput);
 
-
-
-        switch(userInput){
+        switch(userInput[0]){
         case 'd' :
             game.translate(Direction::DOWN);
             break;
@@ -53,7 +50,7 @@ void Controller::start(){
             game.rotate(Rotation::ANTI_CLOCKWISE);
             break;
         }
-    }while(std::cin >> userInput);
+    }while(true);
 
 }
 

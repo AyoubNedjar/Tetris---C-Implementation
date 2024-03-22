@@ -1,7 +1,7 @@
 #include "View.h"
 #include <iostream>
 
-
+using namespace std;
 
 View::View(){};
 
@@ -65,7 +65,13 @@ void View::displayBoard(const Board& board){
         }
     }
     std::cout << std::endl;
-    std::cout <<"-----------------------------" <<std::endl;
+    std::cout <<"-----------------------------" <<endl;
 
+}
+
+void View::displayInfosGame(Game &game)
+{
+    std::cout<<"-------------------------------"<<endl;
+    cout<<"---score : "<<game.getScore()<<" | "<<" ligne : "<<game.board.getLines();
 }
 

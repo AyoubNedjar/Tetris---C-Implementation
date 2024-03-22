@@ -24,16 +24,16 @@ private:
 public:
     Game();
 
-
-
     std::vector<Position> addGapForTotalityOfList(const std::vector<Position> & positionsTrue, Position gap);
     std::vector<Position> convertStartPositionsBrickToPositionsBoard(const std::vector<Position> & positionsTrue, Position gap);
     std::vector<Position> convertPositionsInBoardForRotate(const std::vector<Position> & positionsTrue, Position gap);
-    void applyTransformationAndCheckForValidPositions(const std::vector<Position> & newPositions);
-    bool inBoard(const std::vector<Position> & positionsTrue);
+    bool applyTransformationAndCheckForValidPositions(const std::vector<Position> & newPositions);
     Position addGap(const Position& p, Position gap);
     bool hasCollisions(const std::vector<Position> & positionsInBoard);
     std::vector<Position> posWithoutOldPos(const std::vector<Position> & newPositionsInBoard);
+
+    bool inBoardWidth(const std::vector<Position> & positionsTrue);
+    bool inBoardHeight(const std::vector<Position> & positionsTrue);
 
     void translate(Direction d);
     void rotate(Rotation sens);

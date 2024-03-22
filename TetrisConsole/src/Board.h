@@ -20,7 +20,9 @@ public:
     Board();
     Board(int height, int width);
 
-    bool inBoard(Position pos);
+    bool inBoardHeight(Position pos);
+    bool inBoardWidth(Position p);
+
     std::vector<int> getCompleteLines();//va retourner les lines completes
     void removeCompletesLines(const std::vector<int> &linesList);//va supprimer les lignes complete, ce qui
     //veut dire de faire un decallage des brique en glissant tt les blacks du dessus vers le bas

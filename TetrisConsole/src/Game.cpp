@@ -65,73 +65,80 @@ void Game::nextShape(){
 
 void Game::translate(Direction dir){
 
-        if(!inBoard(listOfCurrentPositions)){
+    /*if(!inBoard(listOfCurrentPositions)){
             throw std::out_of_range("Position is out of board bounds");
-        }
+        }*/
 
 
-        //j aurais pu eviter de créer une nouveles liste et et voir si il est dans le board et si il y  des collisions dans
-        //mais je ne connaitrai pas la raison du pq je ne peux pas bouger
-        //on copie
-        Position p;
-        Position delta = p.getPositionFromDirection(dir);
-        std::vector<Position> newPositionsAfterDirection;
+    //j aurais pu eviter de créer une nouveles liste et et voir si il est dans le board et si il y  des collisions dans
+    //mais je ne connaitrai pas la raison du pq je ne peux pas bouger
+    //on copie
+    Position p;
+    Position delta = p.getPositionFromDirection(dir);
+    std::vector<Position> newPositionsAfterDirection;
 
-        for(auto& p1 :listOfCurrentPositions){
+    for(auto& p1 :listOfCurrentPositions){
 
-            newPositionsAfterDirection.push_back(addGap(p1, delta));
+        newPositionsAfterDirection.push_back(addGap(p1, delta));
 
-        }
+    }
 
-        /*
+    /*
          *si les procaines positions se trouventd dans le board et que il n y a pas de collisions aux prochaines nouvelles positions
          *alors on peut les placer sinon on passe a la prochaine brique
          */
-        applyTransformationAndCheckForValidPositions(newPositionsAfterDirection);
-        notifyObservers();
+    bool isInBoardAndNotHaveCollisions = applyTransformationAndCheckForValidPositions(newPositionsAfterDirection);
+
+    if(!isInBoardAndNotHaveCollisions){
+        if(dir==Direction::RIGHT || dir==Direction::LEFT){
+            board.updateCompleteLines();
+        }else{
+            board.updateCompleteLines();
+            nextShape();
+        }
+    }
+
+
+    notifyObservers();
 }
 
 void Game::rotate(Rotation sens){
-        std::vector<Position> rotatePositionsInBrick;
-        std::vector<Position> newPositionsAfterRotate;
+    std::vector<Position> rotatePositionsInBrick;
+    std::vector<Position> newPositionsAfterRotate;
 
-        currentBrick->rotate(sens);
-        rotatePositionsInBrick= currentBrick->getPositionsTrue();
+    currentBrick->rotate(sens);
+    rotatePositionsInBrick= currentBrick->getPositionsTrue();
 
-        //c'est le decalage ou le delta entre une pos occupée par la brique courante et une pos de la meme brique retourné
-        Position gapBetweenPosCurrentAndPosInBrick(
-            listOfCurrentPositions.front().getX() - rotatePositionsInBrick.front().getX(),
-            listOfCurrentPositions.front().getY() - rotatePositionsInBrick.front().getY());
+    //c'est le decalage ou le delta entre une pos occupée par la brique courante et une pos de la meme brique retourné
+    Position gapBetweenPosCurrentAndPosInBrick(
+        listOfCurrentPositions.front().getX() - rotatePositionsInBrick.front().getX(),
+        listOfCurrentPositions.front().getY() - rotatePositionsInBrick.front().getY());
 
-        newPositionsAfterRotate = convertPositionsInBoardForRotate(rotatePositionsInBrick, gapBetweenPosCurrentAndPosInBrick);
-        applyTransformationAndCheckForValidPositions(newPositionsAfterRotate);
-        notifyObservers();
+    newPositionsAfterRotate = convertPositionsInBoardForRotate(rotatePositionsInBrick, gapBetweenPosCurrentAndPosInBrick);
+    applyTransformationAndCheckForValidPositions(newPositionsAfterRotate);
+    notifyObservers();
 }
 
 void Game::drop()
 {
-        while (true) {
-            translate(Direction::DOWN);
-        }
+
 }
 
-void Game::applyTransformationAndCheckForValidPositions(const std::vector<Position> &newPositions)
+bool Game::applyTransformationAndCheckForValidPositions(const std::vector<Position> &newPositions)
 {
-        if(inBoard(newPositions) && !hasCollisions(posWithoutOldPos(newPositions))){
-            for(auto& pos : listOfCurrentPositions){
-               board.deleteOldBrick(pos);
-            }
-
-            board.insert(newPositions, currentBrick->getType() );
-            listOfCurrentPositions = newPositions;
-
-
-        }else{
-            board.updateCompleteLines();
-            nextShape();
-
+    if(inBoardHeight(newPositions) && !hasCollisions(posWithoutOldPos(newPositions))){
+        for(auto& pos : listOfCurrentPositions){
+            board.deleteOldBrick(pos);
         }
+
+        board.insert(newPositions, currentBrick->getType() );
+        listOfCurrentPositions = newPositions;
+
+        return true;
+    }
+    return false;
 }
+
 
 
 
@@ -143,26 +150,26 @@ void Game::applyTransformationAndCheckForValidPositions(const std::vector<Positi
  */
 std::vector<Position> Game::posWithoutOldPos(const std::vector<Position> &newPositionsInBoard)
 {
-        std::vector<Position> realNewPositions;
+    std::vector<Position> realNewPositions;
 
-        for (const auto& newPos : newPositionsInBoard) {
-            bool isNew = true;
+    for (const auto& newPos : newPositionsInBoard) {
+        bool isNew = true;
 
-            // Vérifier si la nouvelle position est déjà dans la liste actuelle
-            for (const auto& oldPos : listOfCurrentPositions) {
-               if (newPos == oldPos) {
-                   isNew = false;
-                   break;
-               }
-            }
-
-            // Si la nouvelle position n'est pas dans la liste actuelle, l'ajouter à la liste des nouvelles positions
-            if (isNew) {
-               realNewPositions.push_back(newPos);
+        // Vérifier si la nouvelle position est déjà dans la liste actuelle
+        for (const auto& oldPos : listOfCurrentPositions) {
+            if (newPos == oldPos) {
+                isNew = false;
+                break;
             }
         }
 
-        return realNewPositions;
+        // Si la nouvelle position n'est pas dans la liste actuelle, l'ajouter à la liste des nouvelles positions
+        if (isNew) {
+            realNewPositions.push_back(newPos);
+        }
+    }
+
+    return realNewPositions;
 }
 
 /**
@@ -178,7 +185,7 @@ std::vector<Position> Game::addGapForTotalityOfList(const std::vector<Position> 
 {
     std::vector<Position> copiePositionsTrue;
     for (auto& position : positionsTrue) {
-            copiePositionsTrue.push_back(addGap(position, gap));
+        copiePositionsTrue.push_back(addGap(position, gap));
     }
     return copiePositionsTrue;
 }
@@ -205,9 +212,18 @@ std::vector<Position> Game::convertPositionsInBoardForRotate(const std::vector<P
  * @param positionsInBoard
  * @return
  */
-bool Game::inBoard(const std::vector<Position> & positionsInBoard){
+bool Game::inBoardHeight(const std::vector<Position> & positionsInBoard){
     for (auto& position : positionsInBoard) {
-        if(!board.inBoard(position)){
+        if(!board.inBoardHeight(position)){
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Game::inBoardWidth(const std::vector<Position> & positionsInBoard){
+    for (auto& position : positionsInBoard) {
+        if(!board.inBoardWidth(position)){
             return false;
         }
     }
