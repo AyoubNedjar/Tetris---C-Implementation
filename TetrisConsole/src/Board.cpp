@@ -8,7 +8,8 @@
  * lignes et crée un vecteur interne pour chaque ligne avec width éléments.
  * @brief Board::Board
  */
-Board::Board():height(20), width(10){
+Board::Board():height(20), width(5){
+    countCompletesLines = 0;
     board.resize(height, std::vector<CaseType>(width, CaseType::NOT_OCCUPIED));
 
 };
@@ -39,7 +40,7 @@ bool Board::inBoardWidth(Position p){
 }
 
 
-std::vector<int> Board::getCompleteLines()
+std::vector<int> Board::getIndexCompleteLines()
 {
     std::vector<int> completeLines;
     int cpt  = 0;
@@ -57,6 +58,7 @@ std::vector<int> Board::getCompleteLines()
         lineNumber++;
     }
 
+    countCompletesLines += completeLines.size();//met a jour le nombre de lignes completes
     return completeLines;
 }
 
@@ -75,8 +77,7 @@ void Board::removeCompletesLines(const std::vector<int> & linesList)
 
 void Board::updateCompleteLines()
 {
-
-    removeCompletesLines(getCompleteLines());
+    removeCompletesLines(getIndexCompleteLines());
 }
 
 void Board::insert(const std::vector<Position> & listPositions, CaseType type)
@@ -94,8 +95,10 @@ void Board::deleteOldBrick(Position p)
     board[p.getX()][p.getY()] = CaseType::NOT_OCCUPIED;
 }
 
-const int Board::getLines() const
+const int Board::getCountCompleteslines() const
 {
+
+    /* code pou avoir le nombre de lignes ayante été jouées sans forcement qu'elles soient completes
     int cpt = 0;
     for(auto& row : board){
         for(auto& cell : row){
@@ -106,6 +109,9 @@ const int Board::getLines() const
         }
     }
     return cpt;
+*/
+
+    return countCompletesLines;
 }
 
 CaseType Board::getType(Position p)

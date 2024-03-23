@@ -41,7 +41,8 @@ public:
     void drop();
     void nextShape();
     void paintStartedBrick();
-
+    bool isGameOver();
+    void updateStateIfVictory();
     void checkState();
 
     const int getScore() const;

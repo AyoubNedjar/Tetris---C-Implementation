@@ -13,6 +13,7 @@ private :
     int height;
     int width;
     std::vector<std::vector<CaseType>> board;
+    int countCompletesLines;
 
 
 
@@ -23,7 +24,7 @@ public:
     bool inBoardHeight(Position pos);
     bool inBoardWidth(Position p);
 
-    std::vector<int> getCompleteLines();//va retourner les lines completes
+    std::vector<int> getIndexCompleteLines();//va retourner les lines completes
     void removeCompletesLines(const std::vector<int> &linesList);//va supprimer les lignes complete, ce qui
     //veut dire de faire un decallage des brique en glissant tt les blacks du dessus vers le bas
 
@@ -32,7 +33,7 @@ public:
     void insert(const std::vector<Position> & listOfPositions , CaseType type);
     void deleteOldBrick(Position p);
 
-    const int getLines() const;
+    const int getCountCompleteslines() const;
     CaseType getType(Position p);
     const int getHeight() const;;
     const int getWidth() const;

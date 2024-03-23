@@ -14,6 +14,7 @@ Controller::Controller(Game& g, View v): game(g), view(v){};
 void Controller::update(){
 
 
+    game.updateStateIfVictory();
     view.displayInfosGame(game);
     view.displayBoard(game.getBoard());
 
@@ -25,37 +26,45 @@ void Controller::update(){
  */
 void Controller::start(){
 
-   // string userInput;
+    // string userInput;
     char userInput;
     std::cout<<"bienvenue voici le board ";
     view.displayBoard(game.getBoard());
     int i = 0;
-    do{
-        std::cout<<"entré d pour descendre la piece  ";
-            //getline(cin, userInput);
 
-        switch(userInput){
-        case 'd' :
-            game.translateWithDropOrNot(Direction::DOWN, false);
-            break;
 
-        case 'w' :
-            game.drop();
-            break;
 
-        case 'e' :
-            game.translateWithDropOrNot(Direction::LEFT, false);
-            break;
 
-        case 'r' :
-            game.translateWithDropOrNot(Direction::RIGHT, false);
-            break;
+    while(!game.isGameOver()){
+        do{
+            std::cout<<"entré d pour descendre la piece  ";
+                //getline(cin, userInput);
 
-        case 't' :
-            game.rotate(Rotation::ANTI_CLOCKWISE);
-            break;
-        }
-    }while(cin>>userInput);
+                switch(userInput){
+            case 'd' :
+                game.translateWithDropOrNot(Direction::DOWN, false);
+                break;
+
+            case 'w' :
+                game.drop();
+                break;
+
+            case 'e' :
+                game.translateWithDropOrNot(Direction::LEFT, false);
+                break;
+
+            case 'r' :
+                game.translateWithDropOrNot(Direction::RIGHT, false);
+                break;
+
+            case 't' :
+                game.rotate(Rotation::ANTI_CLOCKWISE);
+                break;
+            }
+        }while(cin>>userInput);
+    }
+
+    view.displayMessage("Vous avez Gagné !!! , BRAVO :)  ");
 
 }
 

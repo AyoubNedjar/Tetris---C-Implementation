@@ -72,6 +72,13 @@ void View::displayBoard(const Board& board){
 void View::displayInfosGame(Game &game)
 {
     std::cout<<"-------------------------------"<<endl;
-    cout<<"---score : "<<game.getScore()<<" | "<<" ligne : "<<game.getBoard().getLines();
+    cout<<"---score : "<<game.getScore()<<" | "<<" ligne : "<<game.getBoard().getCountCompleteslines();
 }
+
+void View::displayMessage(std::string message)
+{
+    cout<<message<<endl;
+}
+
+
 

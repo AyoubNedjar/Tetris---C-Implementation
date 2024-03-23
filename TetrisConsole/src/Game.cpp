@@ -9,7 +9,7 @@
  * le currentBrick c'est un pointeur d une brique donc on lui donne la référence d une brique
  * @brief Game::Game
  */
-Game::Game(): rules(10, 10, 10), state(State::PLAYING){
+Game::Game(): rules(3, 10, 3), state(State::PLAYING){
 
     canDrop = true;
     currentBrick = bag.nextShape();
@@ -34,6 +34,18 @@ void Game::paintStartedBrick(){
 
     board.insert(listOfCurrentPositions, currentBrick->getType());
 
+}
+
+bool Game::isGameOver()
+{
+    return (state==State::LOST);
+}
+
+void Game::updateStateIfVictory()
+{
+    if(rules.isLineComplete(board) || rules.isScoreOver(score)){
+        state = State::LOST;
+    }
 }
 
 /**
@@ -143,7 +155,8 @@ void Game::drop()
     while(canDrop){
         translateWithDropOrNot(Direction::DOWN, true);
     }
-    canDrop = true;
+    canDrop = true;//candrop sert a savoir si on passe a une autre shape, donc tant que on passe pas a une autre shape
+    //on va boucler, et quand on arrivera tt en bas alors on pourra afficher le board car on mettre candrop = false, et ca bouclera plus
     notifyObservers();
 }
 
