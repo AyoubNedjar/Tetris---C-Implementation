@@ -14,6 +14,10 @@ Game::Game(): rules(10, 10, 10), state(State::PLAYING){
     canDrop = true;
     currentBrick = bag.nextShape();
     paintStartedBrick();
+    score = 0 ;
+    niveau = 0;
+    nbLigneComplete = 0;
+
 }
 
 
@@ -48,22 +52,17 @@ void Game::checkState()
     }
 
 }
-
-const int Game::getScore() const
-{
-    return 2;
+int * Game::getNiveau(){
+    return &niveau ;
 }
 
-const void Game::setScore(int newScore)
+int Game::getScore()
 {
-    score = newScore;
+    return score;
 }
-
-const bool Game::getCanDrop()
-{
-    return canDrop;
+int Game::getNbLigneComplete(){
+    return nbLigneComplete;
 }
-
 /**
  * va récupérer un nouvelle brique du sac pour la mettre brique courante
  * @brief Game::nextShape
@@ -110,6 +109,7 @@ void Game::translateWithDropOrNot(Direction dir, bool WithDrop){
             board.updateCompleteLines();
         }else{
             board.updateCompleteLines();
+            score += calculScore(1, 0 , niveau);
             nextShape();
         }
     }
@@ -140,8 +140,10 @@ void Game::rotate(Rotation sens){
 
 void Game::drop()
 {
+    char cptDropCase = 0;
     while(canDrop){
         translateWithDropOrNot(Direction::DOWN, true);
+        cptDropCase++;
     }
     canDrop = true;
     notifyObservers();
@@ -271,5 +273,23 @@ bool Game::hasCollisions(const std::vector<Position> & positionsInBoard){
     }
 
     return false;
+}
+int Game::calculScore(int ligne , int drop , int niveau){
+    int multiplicateur = 0;
+    switch (ligne){
+    case 1:
+        multiplicateur = 40 ;
+        break ;
+    case 2:
+        multiplicateur = 100 ;
+        break ;
+    case 3:
+        multiplicateur = 300 ;
+        break ;
+    case 4:
+        multiplicateur = 1200 ;
+        break ;
+    }
+    return (multiplicateur * ligne + drop)* niveau ;
 }
 

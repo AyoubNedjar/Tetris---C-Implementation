@@ -75,7 +75,6 @@ void Board::removeCompletesLines(const std::vector<int> & linesList)
 
 void Board::updateCompleteLines()
 {
-
     removeCompletesLines(getCompleteLines());
 }
 

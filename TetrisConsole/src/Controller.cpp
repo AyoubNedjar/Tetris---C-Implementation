@@ -24,8 +24,9 @@ void Controller::update(){
  * @brief Controller::start
  */
 void Controller::start(){
-
-   // string userInput;
+    //int * gameScore = game.getScore();
+    //char nbCaseDrop = 0;
+    // string userInput;
     char userInput;
     std::cout<<"bienvenue voici le board ";
     view.displayBoard(game.getBoard());
@@ -34,8 +35,8 @@ void Controller::start(){
         std::cout<<"entré d pour descendre la piece  ";
             //getline(cin, userInput);
 
-        switch(userInput){
-        case 'd' :
+            switch(userInput){
+        case 's' :
             game.translateWithDropOrNot(Direction::DOWN, false);
             break;
 
@@ -43,17 +44,23 @@ void Controller::start(){
             game.drop();
             break;
 
-        case 'e' :
+        case 'q' :
             game.translateWithDropOrNot(Direction::LEFT, false);
             break;
 
-        case 'r' :
+        case 'd' :
             game.translateWithDropOrNot(Direction::RIGHT, false);
             break;
 
-        case 't' :
+        case 'e' :
+            game.rotate(Rotation::CLOCKWISE);
+            break;
+        case 'a' :
             game.rotate(Rotation::ANTI_CLOCKWISE);
             break;
+        }
+        if (game.getNbLigneComplete()>=10){
+            *(game.getNiveau()) = game.getNbLigneComplete()/10 ;
         }
     }while(cin>>userInput);
 

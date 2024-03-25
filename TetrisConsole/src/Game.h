@@ -18,6 +18,8 @@ private:
     State state;
     std::vector<Position> listOfCurrentPositions;
     int score;
+    int niveau;
+    int nbLigneComplete;
     bool canDrop;
 
 
@@ -44,14 +46,15 @@ public:
 
     void checkState();
 
-    const int getScore() const;
-    const void setScore(int newScore);
+    int getScore();
+    int *getNiveau();
+    int getNbLigneComplete();
     const Board& getBoard() const { return board; }
     State getState() const { return state; }
-    const bool getCanDrop();
 
 
     void setState(State newState) { state = newState; }
+    int calculScore(int ligne , int drop , int niveau);
 
 };
 
