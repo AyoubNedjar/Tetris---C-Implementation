@@ -10,6 +10,7 @@ public:
     View();
     void displayBoard(const Board& board);
     void displayInfosGame(Game& game);
+    void displayMessage(std::string message);
 
 };
 

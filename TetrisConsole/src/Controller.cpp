@@ -14,6 +14,7 @@ Controller::Controller(Game& g, View v): game(g), view(v){};
 void Controller::update(){
 
 
+    game.updateStateIfVictory();
     view.displayInfosGame(game);
     view.displayBoard(game.getBoard());
 
@@ -32,26 +33,16 @@ void Controller::start(){
     view.displayBoard(game.getBoard());
     int i = 0;
     do{
-        std::cout<<"entré d pour descendre la piece  ";
-            //getline(cin, userInput);
-
             switch(userInput){
         case 's' :
             game.translateWithDropOrNot(Direction::DOWN, false);
             break;
-
-        case 'w' :
-            game.drop();
-            break;
-
         case 'q' :
             game.translateWithDropOrNot(Direction::LEFT, false);
             break;
-
         case 'd' :
             game.translateWithDropOrNot(Direction::RIGHT, false);
             break;
-
         case 'e' :
             game.rotate(Rotation::CLOCKWISE);
             break;
@@ -63,6 +54,5 @@ void Controller::start(){
             *(game.getNiveau()) = game.getNbLigneComplete()/10 ;
         }
     }while(cin>>userInput);
-
 }
 

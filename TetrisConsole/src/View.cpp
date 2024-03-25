@@ -75,3 +75,10 @@ void View::displayInfosGame(Game &game)
     cout<<"---score : "<<game.getScore()<<" | "<<" ligne : "<<game.getNbLigneComplete();
 }
 
+void View::displayMessage(std::string message)
+{
+    cout<<message<<endl;
+}
+
+
+

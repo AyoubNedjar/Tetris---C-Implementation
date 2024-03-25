@@ -15,6 +15,6 @@ bool CheckRules::isScoreOver(int currentScore)
 }
 
 bool CheckRules::isLineComplete(Board &board)
-    {
-    return true;
-    };
+{
+    return (board.getCountCompleteslines()==lineMax);
+};
