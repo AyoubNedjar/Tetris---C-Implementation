@@ -72,7 +72,19 @@ void View::displayBoard(const Board& board){
 void View::displayInfosGame(Game &game)
 {
     std::cout<<"-------------------------------"<<endl;
-    cout<<"---score : "<<game.getScore()<<" | "<<" ligne : "<<game.getNbLigneComplete();
+    displayScore(game);
+    displayNbLigneComplete(game);
+    displayNiveau(game);
+}
+
+void View::displayScore(Game& game){
+    cout << "score : " << game.getScore() << endl;
+}
+void View::displayNbLigneComplete(Game& game){
+    cout << "nombre de ligne faites : " << game.getBoard().getCountCompleteslines()<< endl;
+}
+void View::displayNiveau(Game& game){
+    cout << "niveau : " << *game.getNiveau() << endl;
 }
 
 void View::displayMessage(std::string message)
@@ -80,5 +92,10 @@ void View::displayMessage(std::string message)
     cout<<message<<endl;
 }
 
-
-
+void View::displayState(Game& game){
+    if(game.getState() == State::WON){
+        cout << "Congratulations you won !" << endl;
+    }else {
+        cout << "Unfortunately you lost !" << endl;
+    }
+}

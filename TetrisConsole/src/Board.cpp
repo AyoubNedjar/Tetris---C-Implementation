@@ -9,7 +9,7 @@
  * @brief Board::Board
  */
 Board::Board():height(20), width(5){
-    countCompletesLines = 0;
+    countCompletesLines =0;
     board.resize(height, std::vector<CaseType>(width, CaseType::NOT_OCCUPIED));
 
 };
@@ -24,7 +24,9 @@ Board::Board(int height,int width):height(height), width(width){
     board.resize(height, std::vector<CaseType>(width, CaseType::NOT_OCCUPIED));
 };
 
-
+const int Board::getCountCompleteslines() const{
+    return countCompletesLines ;
+}
 
 /**
  * verifie si un position se trouve sur le plateau
@@ -75,9 +77,11 @@ void Board::removeCompletesLines(const std::vector<int> & linesList)
 
 }
 
-void Board::updateCompleteLines()
+int Board::updateCompleteLines()
 {
-    removeCompletesLines(getIndexCompleteLines());
+    std::vector<int> lineToRemove = getIndexCompleteLines();
+    removeCompletesLines(lineToRemove);
+    return lineToRemove.size();
 }
 
 void Board::insert(const std::vector<Position> & listPositions, CaseType type)
@@ -95,24 +99,6 @@ void Board::deleteOldBrick(Position p)
     board[p.getX()][p.getY()] = CaseType::NOT_OCCUPIED;
 }
 
-const int Board::getCountCompleteslines() const
-{
-
-    /* code pou avoir le nombre de lignes ayante été jouées sans forcement qu'elles soient completes
-    int cpt = 0;
-    for(auto& row : board){
-        for(auto& cell : row){
-            if(cell!=CaseType::NOT_OCCUPIED){
-                cpt++;
-                break;
-            }
-        }
-    }
-    return cpt;
-*/
-
-    return countCompletesLines;
-}
 
 CaseType Board::getType(Position p)
 {

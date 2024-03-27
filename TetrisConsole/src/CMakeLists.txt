@@ -6,7 +6,7 @@ add_executable(ProjectStructure
     MyClass.h
     MyClass.cpp
     CommonData.h
-    CommonData.cpp
+
     Position.h Position.cpp
     Observer.h
     Observable.h Observable.cpp

@@ -61,7 +61,7 @@ int main()
     g.addObserver(&c);
 
     c.start();
-   disableRawMode();
+    disableRawMode();
 
     return 0;
 }

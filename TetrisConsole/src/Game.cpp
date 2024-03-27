@@ -9,18 +9,35 @@
  * le currentBrick c'est un pointeur d une brique donc on lui donne la référence d une brique
  * @brief Game::Game
  */
-Game::Game(): rules(3, 10, 3), state(State::PLAYING){
+Game::Game(): rules(1000, 10, 2), state(State::PLAYING){
 
     canDrop = true;
     currentBrick = bag.nextShape();
     paintStartedBrick();
     score = 0 ;
-    niveau = 0;
-    nbLigneComplete = 0;
-
+    niveau = 1;
+    TotalLigneComplete = 0;
 }
 
+const Board& Game::getBoard()const{
+    return board ;
+}
 
+State Game::getState() const {
+    return state ;
+}
+
+int * Game::getNiveau(){
+    return &niveau ;
+}
+
+int Game::getScore(){
+    return score;
+}
+
+int Game::getNbLigneComplete(){
+    return TotalLigneComplete;
+}
 
 /**
  *
@@ -48,7 +65,7 @@ bool Game::isGameOver()
 void Game::updateStateIfVictory()
 {
     if(rules.isLineComplete(board) || rules.isScoreOver(score)){
-        state = State::LOST;
+        state = State::WON;
     }
 }
 
@@ -56,25 +73,14 @@ void Game::updateStateIfVictory()
  * va checker si on respecte toujours les regles de jeu pour mettre a jour l'état de jeu
  * @brief Game::checkState
  */
-void Game::checkState()
+/*void Game::checkState()
 {
     //we don't use the methode for the time in this poject in console mode
     if(rules.isLineComplete(board) || rules.isScoreOver(score)){
         setState(State::LOST);
     }
 
-}
-int * Game::getNiveau(){
-    return &niveau ;
-}
-
-int Game::getScore()
-{
-    return score;
-}
-int Game::getNbLigneComplete(){
-    return nbLigneComplete;
-}
+}*/
 /**
  * va récupérer un nouvelle brique du sac pour la mettre brique courante
  * @brief Game::nextShape
@@ -90,7 +96,7 @@ void Game::nextShape(){
 }
 
 
-void Game::translateWithDropOrNot(Direction dir, bool WithDrop){
+int Game::translateWithDropOrNot(Direction dir, bool WithDrop){
 
     /*if(!inBoard(listOfCurrentPositions)){
             throw std::out_of_range("Position is out of board bounds");
@@ -102,6 +108,7 @@ void Game::translateWithDropOrNot(Direction dir, bool WithDrop){
     //on copie
     Position p;
     Position delta = p.getPositionFromDirection(dir);
+    int nbLine = 0;
     std::vector<Position> newPositionsAfterDirection;
 
     for(auto& p1 :listOfCurrentPositions){
@@ -120,17 +127,17 @@ void Game::translateWithDropOrNot(Direction dir, bool WithDrop){
         if(dir==Direction::RIGHT || dir==Direction::LEFT){
             board.updateCompleteLines();
         }else{
-            board.updateCompleteLines();
-            score += calculScore(1, 0 , niveau);
+            nbLine = board.updateCompleteLines();
             nextShape();
         }
     }
 
 
     if(!WithDrop){
+        score += calculScore(nbLine , 0 , niveau);
         notifyObservers();
     }
-
+    return nbLine ;
 }
 
 void Game::rotate(Rotation sens){
@@ -152,13 +159,15 @@ void Game::rotate(Rotation sens){
 
 void Game::drop()
 {
-    char cptDropCase = 0;
+    int nbLine = 0 ;
+    int drop = 0 ;
     while(canDrop){
-        translateWithDropOrNot(Direction::DOWN, true);
-        cptDropCase++;
+        nbLine =translateWithDropOrNot(Direction::DOWN, true);
+        drop++;
     }
     canDrop = true;//candrop sert a savoir si on passe a une autre shape, donc tant que on passe pas a une autre shape
     //on va boucler, et quand on arrivera tt en bas alors on pourra afficher le board car on mettre candrop = false, et ca bouclera plus
+    score += calculScore(nbLine , drop-1, niveau);
     notifyObservers();
 }
 
@@ -301,6 +310,8 @@ int Game::calculScore(int ligne , int drop , int niveau){
         break ;
     case 4:
         multiplicateur = 1200 ;
+        break ;
+    default :
         break ;
     }
     return (multiplicateur * ligne + drop)* niveau ;

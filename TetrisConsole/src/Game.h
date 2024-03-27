@@ -19,13 +19,19 @@ private:
     std::vector<Position> listOfCurrentPositions;
     int score;
     int niveau;
-    int nbLigneComplete;
+    int TotalLigneComplete;
     bool canDrop;
 
 
 
 public:
     Game();
+
+    int getScore();
+    int *getNiveau();
+    int getNbLigneComplete();
+    const Board& getBoard() const ;
+    State getState() const ;
 
     std::vector<Position> addGapForTotalityOfList(const std::vector<Position> & positionsTrue, Position gap);
     std::vector<Position> convertStartPositionsBrickToPositionsBoard(const std::vector<Position> & positionsTrue, Position gap);
@@ -38,7 +44,7 @@ public:
     bool inBoardWidth(const std::vector<Position> & positionsTrue);
     bool inBoardHeight(const std::vector<Position> & positionsTrue);
 
-    void translateWithDropOrNot(Direction d, bool withDrop);
+    int translateWithDropOrNot(Direction d, bool withDrop);
     void rotate(Rotation sens);
     void drop();
     void nextShape();
@@ -46,13 +52,6 @@ public:
     bool isGameOver();
     void updateStateIfVictory();
     void checkState();
-
-    int getScore();
-    int *getNiveau();
-    int getNbLigneComplete();
-    const Board& getBoard() const { return board; }
-    State getState() const { return state; }
-
 
     void setState(State newState) { state = newState; }
     int calculScore(int ligne , int drop , int niveau);
