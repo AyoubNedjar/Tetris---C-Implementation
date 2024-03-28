@@ -12,10 +12,12 @@ Controller::Controller(Game& g, View v): game(g), view(v){};
  * @brief Controller::update
  */
 void Controller::update(){
-
-    view.displayInfosGame(game);
-    view.displayBoard(game.getBoard());
     game.updateStateIfVictory();
+
+    //if (game.getState()== State::PLAYING){
+    view.displayBoard(game.getBoard());
+    view.displayInfosGame(game);
+    //}
 }
 
 /**
@@ -28,7 +30,7 @@ void Controller::start(){
     std::cout<<"bienvenue voici le board ";
     view.displayBoard(game.getBoard());
     int i = 0;
-    while (cin>>userInput && game.getState()==State::PLAYING){
+    while (game.getState()==State::PLAYING && cin>>userInput ){
         switch(userInput){
         case 's' :
             game.translateWithDropOrNot(Direction::DOWN, false);
@@ -53,6 +55,7 @@ void Controller::start(){
             *(game.getNiveau()) = (game.getNbLigneComplete()/10)+1 ;
         }
     }
+
     view.displayState(game);
 }
 

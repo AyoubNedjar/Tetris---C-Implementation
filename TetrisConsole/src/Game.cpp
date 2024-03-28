@@ -1,7 +1,4 @@
 #include "Game.h"
-#include <ostream>
-#include <stdexcept>
-
 /**
  * Ici quand je crée game j'initialise le statut comme en train de jouer et je donne
  * le position de depart au milieu du plateau
@@ -9,7 +6,7 @@
  * le currentBrick c'est un pointeur d une brique donc on lui donne la référence d une brique
  * @brief Game::Game
  */
-Game::Game(): rules(1000, 10, 2), state(State::PLAYING){
+Game::Game(): rules(10000, 10, 50), state(State::PLAYING){
 
     canDrop = true;
     currentBrick = bag.nextShape();
@@ -92,7 +89,7 @@ void Game::nextShape(){
     //tranfert de propriété avec pointeur intelligent pour que current brique pointe vers la prochaine
     currentBrick = std::move(nextBrickPtr);
     paintStartedBrick();
-    canDrop = false;
+    canDrop=false;
 }
 
 
@@ -161,12 +158,11 @@ void Game::drop()
 {
     int nbLine = 0 ;
     int drop = 0 ;
+    canDrop = true ;
     while(canDrop){
         nbLine =translateWithDropOrNot(Direction::DOWN, true);
         drop++;
     }
-    canDrop = true;//candrop sert a savoir si on passe a une autre shape, donc tant que on passe pas a une autre shape
-    //on va boucler, et quand on arrivera tt en bas alors on pourra afficher le board car on mettre candrop = false, et ca bouclera plus
     score += calculScore(nbLine , drop-1, niveau);
     notifyObservers();
 }
