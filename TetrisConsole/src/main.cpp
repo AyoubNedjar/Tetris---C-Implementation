@@ -1,21 +1,20 @@
 #include "View.h"
 #include "Controller.h"
-#include <iostream>
 
-
+/*
 #ifdef _WIN32
 #include <windows.h>
 #else
 #include <unistd.h>
 #include <termios.h>
 #endif
-
+*/
 
 using namespace std;
 
 
 
-#ifdef _WIN32
+/*#ifdef _WIN32
 void enableRawMode() {
     HANDLE hstdin = GetStdHandle(STD_INPUT_HANDLE);
     DWORD mode;
@@ -47,13 +46,13 @@ void disableRawMode() {
 }
 #endif
 
-
+*/
 
 
 int main()
 {
 
-  enableRawMode();
+    //enableRawMode();
     Game g;
     View v;
     Controller c(g, v);
@@ -61,7 +60,7 @@ int main()
     g.addObserver(&c);
 
     c.start();
-    disableRawMode();
+    //disableRawMode();
 
     return 0;
 }

@@ -25,21 +25,21 @@ void Controller::update(){
  * @brief Controller::start
  */
 void Controller::start(){
-    // string userInput;
-    char userInput;
-    std::cout<<"bienvenue voici le board ";
+    string userInput;
+    //char userInput;
+    view.displayMessage("bienvenue voici le board");
     view.displayBoard(game.getBoard());
     int i = 0;
     while (game.getState()==State::PLAYING && cin>>userInput ){
-        switch(userInput){
+        switch(userInput[0]){
         case 's' :
-            game.translateWithDropOrNot(Direction::DOWN, false);
+            game.moveBrick(Direction::DOWN, false);
             break;
         case 'q' :
-            game.translateWithDropOrNot(Direction::LEFT, false);
+            game.moveBrick(Direction::LEFT, false);
             break;
         case 'd' :
-            game.translateWithDropOrNot(Direction::RIGHT, false);
+            game.moveBrick(Direction::RIGHT, false);
             break;
         case 'e' :
             game.rotate(Rotation::CLOCKWISE);

@@ -8,7 +8,6 @@
 #include "directoryBrick/z.h"
 #include <algorithm>
 #include <random>
-#include <stdexcept>
 
 Bag::Bag(){
 

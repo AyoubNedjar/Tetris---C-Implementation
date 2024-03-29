@@ -1,19 +1,9 @@
 #include "Game.h"
-/**
- * Ici quand je crée game j'initialise le statut comme en train de jouer et je donne
- * le position de depart au milieu du plateau
- *
- * le currentBrick c'est un pointeur d une brique donc on lui donne la référence d une brique
- * @brief Game::Game
- */
-Game::Game(): rules(10000, 10, 50), state(State::PLAYING){
 
+Game::Game(): rules(10000, 10, 50), state(State::PLAYING)  , score(0) , niveau(1) , TotalLigneComplete(0){
     canDrop = true;
     currentBrick = bag.nextShape();
-    paintStartedBrick();
-    score = 0 ;
-    niveau = 1;
-    TotalLigneComplete = 0;
+    insertBrickToBoard();
 }
 
 const Board& Game::getBoard()const{
@@ -41,14 +31,14 @@ int Game::getNbLigneComplete(){
  * va dessiner la forme au tout debut du tableau
  * @brief Game::paintStartedBrick
  */
-void Game::paintStartedBrick(){
+void Game::insertBrickToBoard(){
 
     listOfCurrentPositions = currentBrick->getPositionsTrue();
     Position inputPosition(0, board.getWidth()/2);
     Position gap((inputPosition.getX()-listOfCurrentPositions.front().getX()),
                  (inputPosition.getY()-listOfCurrentPositions.front().getY()));
 
-    listOfCurrentPositions = convertStartPositionsBrickToPositionsBoard(listOfCurrentPositions, gap);
+    listOfCurrentPositions = brickPositionToBoardPosition(listOfCurrentPositions, gap);
     for(auto &pos : listOfCurrentPositions){
         if(board.getType(pos) != CaseType::NOT_OCCUPIED){
             state = State::LOST;
@@ -93,17 +83,12 @@ void Game::nextShape(){
 
     //tranfert de propriété avec pointeur intelligent pour que current brique pointe vers la prochaine
     currentBrick = std::move(nextBrickPtr);
-    paintStartedBrick();
+    insertBrickToBoard();
     canDrop=false;
 }
 
 
-int Game::translateWithDropOrNot(Direction dir, bool WithDrop){
-
-    /*if(!inBoard(listOfCurrentPositions)){
-            throw std::out_of_range("Position is out of board bounds");
-        }*/
-
+int Game::moveBrick(Direction dir, bool WithDrop){
 
     //j aurais pu eviter de créer une nouveles liste et et voir si il est dans le board et si il y  des collisions dans
     //mais je ne connaitrai pas la raison du pq je ne peux pas bouger
@@ -123,7 +108,7 @@ int Game::translateWithDropOrNot(Direction dir, bool WithDrop){
          *si les procaines positions se trouventd dans le board et que il n y a pas de collisions aux prochaines nouvelles positions
          *alors on peut les placer sinon on passe a la prochaine brique
          */
-    bool isInBoardAndNotHaveCollisions = applyTransformationAndCheckForValidPositions(newPositionsAfterDirection);
+    bool isInBoardAndNotHaveCollisions = applyNewPositionsWhenValid(newPositionsAfterDirection);
 
     if(!isInBoardAndNotHaveCollisions){
         if(dir==Direction::RIGHT || dir==Direction::LEFT){
@@ -139,7 +124,7 @@ int Game::translateWithDropOrNot(Direction dir, bool WithDrop){
         score += calculScore(nbLine , 0 , niveau);
         notifyObservers();
     }
-    return nbLine ;
+    return nbLine ; //Returns the number of line completed after the move .
 }
 
 void Game::rotate(Rotation sens){
@@ -154,8 +139,8 @@ void Game::rotate(Rotation sens){
         listOfCurrentPositions.front().getX() - rotatePositionsInBrick.front().getX(),
         listOfCurrentPositions.front().getY() - rotatePositionsInBrick.front().getY());
 
-    newPositionsAfterRotate = convertPositionsInBoardForRotate(rotatePositionsInBrick, gapBetweenPosCurrentAndPosInBrick);
-    applyTransformationAndCheckForValidPositions(newPositionsAfterRotate);
+    newPositionsAfterRotate = brickPositionToBoardPosition(rotatePositionsInBrick, gapBetweenPosCurrentAndPosInBrick);
+    applyNewPositionsWhenValid(newPositionsAfterRotate);
     notifyObservers();
 }
 
@@ -165,14 +150,14 @@ void Game::drop()
     int drop = 0 ;
     canDrop = true ;
     while(canDrop){
-        nbLine =translateWithDropOrNot(Direction::DOWN, true);
+        nbLine = moveBrick(Direction::DOWN, true);
         drop++;
     }
     score += calculScore(nbLine , drop-1, niveau);
     notifyObservers();
 }
 
-bool Game::applyTransformationAndCheckForValidPositions(const std::vector<Position> &newPositions)
+bool Game::applyNewPositionsWhenValid(const std::vector<Position> &newPositions)
 {
     if(inBoardHeight(newPositions) && !hasCollisions(posWithoutOldPos(newPositions))){
         for(auto& pos : listOfCurrentPositions){
@@ -186,9 +171,6 @@ bool Game::applyTransformationAndCheckForValidPositions(const std::vector<Positi
     }
     return false;
 }
-
-
-
 
 /**
  * retourne les positons rééelles du plateau sans les ancienne sinon on recompare les même
@@ -239,19 +221,13 @@ std::vector<Position> Game::addGapForTotalityOfList(const std::vector<Position> 
 }
 /**
  * va renvoyer les positions de départ briques sur la plateau
- * @brief convertPositionsBrickToPositionsBoard
+ * @brief brickPositionToBoardPosition
  * @param positionsTrue
  * @param gap
  */
-std::vector<Position> Game::convertStartPositionsBrickToPositionsBoard(const std::vector<Position>& positionsTrue, Position gap){
+std::vector<Position> Game::brickPositionToBoardPosition(const std::vector<Position> & positionsTrue, Position gap){
     return addGapForTotalityOfList(positionsTrue, gap);
 }
-
-std::vector<Position> Game::convertPositionsInBoardForRotate(const std::vector<Position> &positionsTrue, Position gap)
-{
-    return addGapForTotalityOfList(positionsTrue, gap);
-}
-
 
 
 /**

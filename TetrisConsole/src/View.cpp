@@ -93,9 +93,9 @@ void View::displayMessage(std::string message)
 }
 
 void View::displayState(Game& game){
-    if(game.getState() == State::WON){
-        cout << "Congratulations you won !" << endl;
-    }else {
+    if(game.isGameOver()){
         cout << "Unfortunately you lost !" << endl;
+    }else {
+        cout << "Congratulations you won !" << endl;
     }
 }
