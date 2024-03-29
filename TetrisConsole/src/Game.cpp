@@ -49,9 +49,14 @@ void Game::paintStartedBrick(){
                  (inputPosition.getY()-listOfCurrentPositions.front().getY()));
 
     listOfCurrentPositions = convertStartPositionsBrickToPositionsBoard(listOfCurrentPositions, gap);
-
-    board.insert(listOfCurrentPositions, currentBrick->getType());
-
+    for(auto &pos : listOfCurrentPositions){
+        if(board.getType(pos) != CaseType::NOT_OCCUPIED){
+            state = State::LOST;
+        }
+    }
+    if (state == State::PLAYING){
+        board.insert(listOfCurrentPositions, currentBrick->getType());
+    }
 }
 
 bool Game::isGameOver()
