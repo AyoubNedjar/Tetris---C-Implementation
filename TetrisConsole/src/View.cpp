@@ -65,13 +65,10 @@ void View::displayBoard(const Board& board){
         }
     }
     std::cout << std::endl;
-    std::cout <<"-----------------------------" <<endl;
-
 }
 
 void View::displayInfosGame(Game &game)
 {
-    std::cout<<"-------------------------------"<<endl;
     displayScore(game);
     displayNbLigneComplete(game);
     displayNiveau(game);

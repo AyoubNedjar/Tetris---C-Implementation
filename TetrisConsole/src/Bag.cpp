@@ -11,11 +11,8 @@
 
 Bag::Bag(){
 
-     //listOfShapes.push_back(std::make_unique<Square>());
+    listOfShapes.push_back(std::make_unique<Square>());
     listOfShapes.push_back(std::make_unique<I>());
-    listOfShapes.push_back(std::make_unique<Square>());
-    listOfShapes.push_back(std::make_unique<Square>());
-    //listOfShapes.push_back(std::make_unique<Square>());
 
     listOfShapes.push_back(std::make_unique<S>());
     listOfShapes.push_back(std::make_unique<J>());
@@ -25,6 +22,9 @@ Bag::Bag(){
 
     listOfShapes.push_back(std::make_unique<L>());
 
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::shuffle(listOfShapes.begin() , listOfShapes.end() , gen);
 }
 
 void Bag::shuffle()

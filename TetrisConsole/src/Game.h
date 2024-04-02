@@ -21,7 +21,9 @@ private:
     int TotalLigneComplete;
     bool canDrop;
 
-
+private :
+    void makeBoard();
+    void setState(State newState);
 
 public:
     Game();
@@ -49,13 +51,10 @@ public:
     void nextShape();
     void insertBrickToBoard();
     bool isGameOver();
-    void updateStateIfVictory();
+    void updateStateIfWon();
     void checkState();
 
-    void setState(State newState) { state = newState; }
     int calculScore(int ligne , int drop , int niveau);
-private :
-
 };
 
 #endif // GAME_H

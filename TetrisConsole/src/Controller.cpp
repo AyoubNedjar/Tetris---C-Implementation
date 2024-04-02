@@ -12,12 +12,9 @@ Controller::Controller(Game& g, View v): game(g), view(v){};
  * @brief Controller::update
  */
 void Controller::update(){
-    game.updateStateIfVictory();
-
-    //if (game.getState()== State::PLAYING){
+    game.updateStateIfWon();
     view.displayBoard(game.getBoard());
     view.displayInfosGame(game);
-    //}
 }
 
 /**
@@ -27,6 +24,11 @@ void Controller::update(){
 void Controller::start(){
     string userInput;
     //char userInput;
+    /*view.displayMessage("Voulez-vous modifier la taille du board ? y-n");
+    do {
+        cin >> userInput ;
+    }while(userInput[0] != 'y' && userInput[0] != 'n');
+*/
     view.displayMessage("bienvenue voici le board");
     view.displayBoard(game.getBoard());
     int i = 0;

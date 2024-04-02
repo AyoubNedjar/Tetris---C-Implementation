@@ -1,9 +1,37 @@
 #include "Game.h"
+#include <iostream>
+#include <utility>
 
 Game::Game(): rules(10000, 10, 50), state(State::PLAYING)  , score(0) , niveau(1) , TotalLigneComplete(0){
+    std::string userInput ;
+    std::cout<<"Do you want to play with the regular size of the board ? y(es) - n(o)?" << std::endl;
+    do {
+        std::cin >> userInput ;
+    }while (userInput[0] != 'y' && userInput[0] != 'n');
+    if(userInput[0] == 'n'){
+        makeBoard();
+    }
     canDrop = true;
     currentBrick = bag.nextShape();
     insertBrickToBoard();
+}
+void Game::makeBoard(){
+    int height , width ;
+    std::string userInput ;
+    std::cout << "Please enter a height for your board ." << std::endl ;
+    std::cout << "(minimum -> 10 , maximum -> 50)" << std::endl;
+    do {
+        std::cin >> userInput ;
+    }while (stoi(userInput) < 10 || stoi(userInput) > 50);
+    height = stoi(userInput);
+
+    std::cout << "Please enter a width for your board ." << std::endl ;
+    std::cout << "(minimum -> 10 , maximum -> 50)" << std::endl;
+    do {
+        std::cin >> userInput ;
+    }while (stoi(userInput) < 10 || stoi(userInput) > 50);
+    width = stoi(userInput);
+    board = Board(height , width);
 }
 
 const Board& Game::getBoard()const{
@@ -26,6 +54,10 @@ int Game::getNbLigneComplete(){
     return TotalLigneComplete;
 }
 
+void Game::setState(State newState){
+    state = newState ;
+}
+
 /**
  *
  * va dessiner la forme au tout debut du tableau
@@ -41,7 +73,7 @@ void Game::insertBrickToBoard(){
     listOfCurrentPositions = brickPositionToBoardPosition(listOfCurrentPositions, gap);
     for(auto &pos : listOfCurrentPositions){
         if(board.getType(pos) != CaseType::NOT_OCCUPIED){
-            state = State::LOST;
+            setState(State::LOST);
         }
     }
     if (state == State::PLAYING){
@@ -54,7 +86,7 @@ bool Game::isGameOver()
     return (state==State::LOST);
 }
 
-void Game::updateStateIfVictory()
+void Game::updateStateIfWon()
 {
     if(rules.isLineComplete(board) || rules.isScoreOver(score)){
         state = State::WON;
