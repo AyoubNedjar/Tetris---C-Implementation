@@ -45,6 +45,13 @@ public:
     bool inBoardWidth(const std::vector<Position> & positionsTrue);
     bool inBoardHeight(const std::vector<Position> & positionsTrue);
 
+
+
+    void BoardPrefill();
+    int getCurrentNbLines();
+    void setBoard(int height, int width);
+
+
     int moveBrick(Direction d, bool withDrop);
     void rotate(Rotation sens);
     void drop();

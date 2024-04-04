@@ -100,6 +100,11 @@ void Board::deleteOldBrick(Position p)
     board[p.getX()][p.getY()] = CaseType::NOT_OCCUPIED;
 }
 
+const CaseType &Board::operator()(int row, int col) const
+{
+    return board[row][col];
+}
+
 
 CaseType Board::getType(Position p)
 {

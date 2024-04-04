@@ -13,6 +13,7 @@ private:
 public:
     Controller(Game& g,View v);
     void start();
+    void makeBoardForUser();
     void update() override;
 };
 

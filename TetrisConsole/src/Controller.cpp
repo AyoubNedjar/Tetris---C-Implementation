@@ -15,6 +15,7 @@ void Controller::update(){
     game.updateStateIfWon();
     view.displayBoard(game.getBoard());
     view.displayInfosGame(game);
+    view.displayCommand();
 }
 
 /**
@@ -22,18 +23,36 @@ void Controller::update(){
  * @brief Controller::start
  */
 void Controller::start(){
-    string userInput;
-    //char userInput;
-    /*view.displayMessage("Voulez-vous modifier la taille du board ? y-n");
+    string userInputCommand;
+
+
+    std::string userInputChoiceSizeBoard ;
+    std::cout<<"Do you want to play with the regular size of the board ? y(es) - n(o)?" << std::endl;
     do {
-        cin >> userInput ;
-    }while(userInput[0] != 'y' && userInput[0] != 'n');
-*/
+        std::cin >> userInputChoiceSizeBoard ;
+    }while (userInputChoiceSizeBoard[0] != 'y' && userInputChoiceSizeBoard[0] != 'n');
+    if(userInputChoiceSizeBoard[0] == 'n'){
+        makeBoardForUser();
+    }
+
+     //demande si on doit preremplir le board
+
+    std::string userInputChoicePopulateOrNot ;
+    std::cout<<"Do you want prepopulate the board ? y(es) - n(o)?" << std::endl;
+    do {
+        std::cin >> userInputChoicePopulateOrNot ;
+    }while (userInputChoicePopulateOrNot[0] != 'y' && userInputChoicePopulateOrNot[0] != 'n');
+    if(userInputChoicePopulateOrNot[0] == 'y'){
+        game.BoardPrefill();
+    }
+
+
     view.displayMessage("bienvenue voici le board");
     view.displayBoard(game.getBoard());
+    view.displayCommand();
     int i = 0;
-    while (game.getState()==State::PLAYING && cin>>userInput ){
-        switch(userInput[0]){
+    while (game.getState()==State::PLAYING && cin>>userInputCommand ){
+        switch(userInputCommand[0]){
         case 's' :
             game.moveBrick(Direction::DOWN, false);
             break;
@@ -59,5 +78,25 @@ void Controller::start(){
     }
 
     view.displayState(game);
+}
+
+void Controller::makeBoardForUser()
+{
+    int height , width ;
+    std::string userInput ;
+    std::cout << "Please enter a height for your board ." << std::endl ;
+    std::cout << "(minimum -> 10 , maximum -> 50)" << std::endl;
+    do {
+        std::cin >> userInput ;
+    }while (stoi(userInput) < 10 || stoi(userInput) > 50);
+    height = stoi(userInput);
+
+    std::cout << "Please enter a width for your board ." << std::endl ;
+    std::cout << "(minimum -> 10 , maximum -> 50)" << std::endl;
+    do {
+        std::cin >> userInput ;
+    }while (stoi(userInput) < 10 || stoi(userInput) > 50);
+    width = stoi(userInput);
+    game.setBoard(height, width);
 }
 

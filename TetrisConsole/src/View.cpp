@@ -96,3 +96,19 @@ void View::displayState(Game& game){
         cout << "Congratulations you won !" << endl;
     }
 }
+
+void View::displayCommand()
+{
+    std::cout << "-----------------------" << std::endl;
+    std::cout << "|  Commands:           |" << std::endl;
+    std::cout << "|                      |" << std::endl;
+    std::cout << "|     Down: s          |" << std::endl;
+    std::cout << "|     Right: d         |" << std::endl;
+    std::cout << "|     Left: a          |" << std::endl;
+    std::cout << "|     Clockwise: e     |" << std::endl;
+    std::cout << "|  Counterclockwise: r |" << std::endl;
+    std::cout << "|     Drop: w          |" << std::endl;
+    std::cout << "|                      |" << std::endl;
+    std::cout << "-----------------------" << std::endl;
+    std::cout << "Enter your command : ";
+}

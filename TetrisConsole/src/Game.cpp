@@ -1,37 +1,13 @@
 #include "Game.h"
 #include <iostream>
+#include <random>
 #include <utility>
 
 Game::Game(): rules(10000, 10, 50), state(State::PLAYING)  , score(0) , niveau(1) , TotalLigneComplete(0){
-    std::string userInput ;
-    std::cout<<"Do you want to play with the regular size of the board ? y(es) - n(o)?" << std::endl;
-    do {
-        std::cin >> userInput ;
-    }while (userInput[0] != 'y' && userInput[0] != 'n');
-    if(userInput[0] == 'n'){
-        makeBoard();
-    }
+
     canDrop = true;
     currentBrick = bag.nextShape();
     insertBrickToBoard();
-}
-void Game::makeBoard(){
-    int height , width ;
-    std::string userInput ;
-    std::cout << "Please enter a height for your board ." << std::endl ;
-    std::cout << "(minimum -> 10 , maximum -> 50)" << std::endl;
-    do {
-        std::cin >> userInput ;
-    }while (stoi(userInput) < 10 || stoi(userInput) > 50);
-    height = stoi(userInput);
-
-    std::cout << "Please enter a width for your board ." << std::endl ;
-    std::cout << "(minimum -> 10 , maximum -> 50)" << std::endl;
-    do {
-        std::cin >> userInput ;
-    }while (stoi(userInput) < 10 || stoi(userInput) > 50);
-    width = stoi(userInput);
-    board = Board(height , width);
 }
 
 const Board& Game::getBoard()const{
@@ -276,6 +252,61 @@ bool Game::inBoardHeight(const std::vector<Position> & positionsInBoard){
     }
     return true;
 }
+
+void Game::BoardPrefill()
+{
+    std::random_device rd; // Utilisé pour initialiser le générateur de nombres aléatoires
+    std::mt19937 gen(rd()); // Générateur de nombres aléatoires
+
+
+    int maxHeight = board.getHeight() / 2;
+
+    while(getCurrentNbLines()< maxHeight+3){//rajout du +3 pour car il compte la brique courante et elle prend 3 ligne en general
+        //donc comme ca on compte juste les lignes  apartir du bas
+
+        std::uniform_int_distribution<int> dis(1, 3);
+        int randomCommand = dis(gen);
+
+        switch(randomCommand){
+        case 1 : moveBrick(Direction::DOWN, true);
+            break;
+        case 2 : moveBrick(Direction::LEFT, true);
+            break;
+        case 3 : moveBrick(Direction::RIGHT, true);
+            break;
+        }
+    }
+}
+
+/**
+ * verifie si une ligne continet une case non vide
+ * @brief Game::isHalfFill
+ * @return
+ */
+int Game::getCurrentNbLines() {
+    int currentNbLines = 0;
+
+    // Parcourir le plateau de bas en haut
+    for (int row = board.getHeight() - 1; row >= 0; row--) {
+
+        // Vérifier si la ligne a au moins une case rempli
+        for (int col = 0; col < board.getWidth(); col++) {
+            if (board(row, col) != CaseType::NOT_OCCUPIED) {
+                currentNbLines++;
+                break;
+            }
+        }
+
+    }
+
+    return currentNbLines;
+}
+
+void Game::setBoard(int height, int width)
+{
+    board = Board(height, width);
+}
+
 
 bool Game::inBoardWidth(const std::vector<Position> & positionsInBoard){
     for (auto& position : positionsInBoard) {
