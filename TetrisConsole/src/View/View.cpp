@@ -78,7 +78,7 @@ void View::displayScore(Game& game){
     cout << "score : " << game.getScore() << endl;
 }
 void View::displayNbLigneComplete(Game& game){
-    cout << "nombre de ligne faites : " << game.getBoard().getCountCompleteslines()<< endl;
+    cout << "number of line completed : " << game.getBoard().getCountCompleteslines()<< endl;
 }
 void View::displayNiveau(Game& game){
     cout << "niveau : " << *game.getNiveau() << endl;

@@ -23,7 +23,6 @@ bool Board::posIsInBoardWidth(Position p){
     return (p.getY() >= 0 && p.getY() < getWidth()) ;
 }
 
-
 std::vector<int> Board::getIndexCompleteLines()
 {
     std::vector<int> completeLines;
@@ -101,6 +100,11 @@ const std::vector<std::vector<CaseType>> &Board::getBoard() const
 {
     return board;
 }
-
+/*
+ * Used for tests .
+ */
+void Board::setTypeAtPos(Position pos , CaseType type){
+    board[pos.getX()][pos.getY()] = type ;
+}
 
 

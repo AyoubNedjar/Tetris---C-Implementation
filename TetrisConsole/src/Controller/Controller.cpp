@@ -42,7 +42,7 @@ void Controller::start(){
     }
 
 
-    view.displayMessage("bienvenue voici le board");
+    view.displayMessage("Welcome");
     view.displayBoard(game.getBoard());
     view.displayCommand();
     int i = 0;

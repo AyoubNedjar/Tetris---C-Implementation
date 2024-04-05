@@ -28,7 +28,6 @@ public:
     void insert(const std::vector<Position> & listOfPositions , CaseType type);
     void deleteOldBrick(Position p);
 
-
     const CaseType& operator()(int row, int col) const;
     CaseType getType(Position p);
     const int getHeight() const;;
@@ -38,8 +37,7 @@ public:
     void setHeight(int newHeight);;
     void setWidth(int newWidth);;
 
-
-
+    void setTypeAtPos(Position pos , CaseType type);
 };
 
 #endif // BOARD_H
