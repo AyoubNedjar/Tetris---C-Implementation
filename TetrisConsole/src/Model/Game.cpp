@@ -1,10 +1,8 @@
 #include "Game.h"
-#include <iostream>
 #include <random>
 #include <utility>
 
-Game::Game(): rules(10000, 10, 50), state(State::PLAYING)  , score(0) , niveau(1) , TotalLigneComplete(0){
-
+Game::Game(): rules(10000, 10, 50 , 20), state(State::PLAYING)  , score(0) , level(1) , TotalLigneComplete(0){
     canDrop = true;
     currentBrick = bag.nextShape();
     insertBrickToBoard();
@@ -19,7 +17,7 @@ State Game::getState() const {
 }
 
 int * Game::getNiveau(){
-    return &niveau ;
+    return &level ;
 }
 
 int Game::getScore(){
@@ -34,17 +32,13 @@ void Game::setState(State newState){
     state = newState ;
 }
 
-/**
- *
- * va dessiner la forme au tout debut du tableau
- * @brief Game::paintStartedBrick
- */
 void Game::insertBrickToBoard(){
 
     listOfCurrentPositions = currentBrick->getPositionsTrue();
     Position inputPosition(0, board.getWidth()/2);
     Position gap((inputPosition.getX()-listOfCurrentPositions.front().getX()),
                  (inputPosition.getY()-listOfCurrentPositions.front().getY()));
+    //it calculates the distance between the brick's shape and the left border .
 
     listOfCurrentPositions = brickPositionToBoardPosition(listOfCurrentPositions, gap);
     for(auto &pos : listOfCurrentPositions){
@@ -64,75 +58,57 @@ bool Game::isGameOver()
 
 void Game::updateStateIfWon()
 {
-    if(rules.isLineComplete(board) || rules.isScoreOver(score)){
+    if(rules.isLineComplete(board) || rules.isScoreOver(score) || rules.isLevelOver(level)){
         state = State::WON;
     }
 }
 
-/**
- * va checker si on respecte toujours les regles de jeu pour mettre a jour l'état de jeu
- * @brief Game::checkState
- */
-/*void Game::checkState()
-{
-    //we don't use the methode for the time in this poject in console mode
-    if(rules.isLineComplete(board) || rules.isScoreOver(score)){
-        setState(State::LOST);
-    }
-
-}*/
-/**
- * va récupérer un nouvelle brique du sac pour la mettre brique courante
- * @brief Game::nextShape
- */
 void Game::nextShape(){
     listOfCurrentPositions.clear();
     std::unique_ptr<Brick> nextBrickPtr = bag.nextShape();
 
-    //tranfert de propriété avec pointeur intelligent pour que current brique pointe vers la prochaine
+    //std::move transfers the properties with the smart pointer to the next brick
     currentBrick = std::move(nextBrickPtr);
     insertBrickToBoard();
     canDrop=false;
 }
 
-
+/*
+ * This methods returns the number of line completed . It was the easiest way to get it for the score .
+ */
 int Game::moveBrick(Direction dir, bool WithDrop){
 
-    //j aurais pu eviter de créer une nouveles liste et et voir si il est dans le board et si il y  des collisions dans
-    //mais je ne connaitrai pas la raison du pq je ne peux pas bouger
-    //on copie
     Position p;
     Position delta = p.getPositionFromDirection(dir);
-    int nbLine = 0;
+    int nbLineCompleted = 0;
     std::vector<Position> newPositionsAfterDirection;
 
     for(auto& p1 :listOfCurrentPositions){
-
         newPositionsAfterDirection.push_back(addGap(p1, delta));
-
     }
-
     /*
-         *si les procaines positions se trouventd dans le board et que il n y a pas de collisions aux prochaines nouvelles positions
-         *alors on peut les placer sinon on passe a la prochaine brique
-         */
-    bool isInBoardAndNotHaveCollisions = applyNewPositionsWhenValid(newPositionsAfterDirection);
+     * If the next positions don't have collisions and there is no collisions with the next ones . We then place the brick at
+     * the next positions .
+     */
+    bool hasNoCollisions = applyNewPositionsWhenValid(newPositionsAfterDirection);
 
-    if(!isInBoardAndNotHaveCollisions){
+    if(!hasNoCollisions){
         if(dir==Direction::RIGHT || dir==Direction::LEFT){
             board.updateCompleteLines();
         }else{
-            nbLine = board.updateCompleteLines();
+            nbLineCompleted = board.updateCompleteLines();
             nextShape();
         }
     }
 
-
+    /*
+     * We calculate the score differently if there is a drop or not .
+     */
     if(!WithDrop){
-        score += calculScore(nbLine , 0 , niveau);
+        score += calculScore(nbLineCompleted , 0 , level);
         notifyObservers();
     }
-    return nbLine ; //Returns the number of line completed after the move .
+    return nbLineCompleted ; //Returns the number of line completed after the move .
 }
 
 void Game::rotate(Rotation sens){
@@ -143,12 +119,14 @@ void Game::rotate(Rotation sens){
     rotatePositionsInBrick= currentBrick->getPositionsTrue();
 
     //c'est le decalage ou le delta entre une pos occupée par la brique courante et une pos de la meme brique retourné
-    Position gapBetweenPosCurrentAndPosInBrick(
+    Position gapBetweenCurrentPosAndBrickPos(
         listOfCurrentPositions.front().getX() - rotatePositionsInBrick.front().getX(),
         listOfCurrentPositions.front().getY() - rotatePositionsInBrick.front().getY());
+    //It's the gap between the current brick positions and the same brick but with the rotation applied
 
-    newPositionsAfterRotate = brickPositionToBoardPosition(rotatePositionsInBrick, gapBetweenPosCurrentAndPosInBrick);
+    newPositionsAfterRotate = brickPositionToBoardPosition(rotatePositionsInBrick, gapBetweenCurrentPosAndBrickPos);
     applyNewPositionsWhenValid(newPositionsAfterRotate);
+    //We the rotation is not applied on the board if the brick is obstruct or not in the board.
     notifyObservers();
 }
 
@@ -161,13 +139,14 @@ void Game::drop()
         nbLine = moveBrick(Direction::DOWN, true);
         drop++;
     }
-    score += calculScore(nbLine , drop-1, niveau);
+    score += calculScore(nbLine , drop-1, level); //we do (drop -1) because once it's on the bottom the drop will still continue
+                                                // but it doesn't count as a height .
     notifyObservers();
 }
 
 bool Game::applyNewPositionsWhenValid(const std::vector<Position> &newPositions)
 {
-    if(inBoardHeight(newPositions) && !hasCollisions(posWithoutOldPos(newPositions))){
+    if(posIsInBoardHeight(newPositions) && !hasCollisions(posWithoutOldPos(newPositions))){
         for(auto& pos : listOfCurrentPositions){
             board.deleteOldBrick(pos);
         }
@@ -181,11 +160,16 @@ bool Game::applyNewPositionsWhenValid(const std::vector<Position> &newPositions)
 }
 
 /**
- * retourne les positons rééelles du plateau sans les ancienne sinon on recompare les même
- * @brief Game::posWithoutOldPos
- * @param newPositionsInBoard
+ * @brief
+ * This method prevents us from looking at the old positions we were so it compares only with the
+ * brick's positions that are not the current brick .
+ * Else it would make collisions where there are none .
+ * @param
+ * Positions that we verify if we can add them to the board .
  * @return
+ * The valid vector of positions .
  */
+
 std::vector<Position> Game::posWithoutOldPos(const std::vector<Position> &newPositionsInBoard)
 {
     std::vector<Position> realNewPositions;
@@ -193,7 +177,7 @@ std::vector<Position> Game::posWithoutOldPos(const std::vector<Position> &newPos
     for (const auto& newPos : newPositionsInBoard) {
         bool isNew = true;
 
-        // Vérifier si la nouvelle position est déjà dans la liste actuelle
+        // Checks if the new positions is already in the list .
         for (const auto& oldPos : listOfCurrentPositions) {
             if (newPos == oldPos) {
                 isNew = false;
@@ -201,7 +185,7 @@ std::vector<Position> Game::posWithoutOldPos(const std::vector<Position> &newPos
             }
         }
 
-        // Si la nouvelle position n'est pas dans la liste actuelle, l'ajouter à la liste des nouvelles positions
+        // If the new positions is not in the actual list , we add it .
         if (isNew) {
             realNewPositions.push_back(newPos);
         }
@@ -210,16 +194,11 @@ std::vector<Position> Game::posWithoutOldPos(const std::vector<Position> &newPos
     return realNewPositions;
 }
 
-/**
- * retourne une nouvelles position à laquelle on a ajouter un delta(décalage)
- * @brief addGap
- */
 Position Game::addGap(const Position& p, Position gap){
     return Position(p.getX()+gap.getX(), p.getY()+gap.getY());
 }
 
-
-std::vector<Position> Game::addGapForTotalityOfList(const std::vector<Position> &positionsTrue, Position gap)
+std::vector<Position> Game::addGapForBrickPositions(const std::vector<Position> &positionsTrue, Position gap)
 {
     std::vector<Position> copiePositionsTrue;
     for (auto& position : positionsTrue) {
@@ -227,42 +206,22 @@ std::vector<Position> Game::addGapForTotalityOfList(const std::vector<Position> 
     }
     return copiePositionsTrue;
 }
-/**
- * va renvoyer les positions de départ briques sur la plateau
- * @brief brickPositionToBoardPosition
- * @param positionsTrue
- * @param gap
+
+/*
+ * It will return the center positions where will be the current brick .
  */
 std::vector<Position> Game::brickPositionToBoardPosition(const std::vector<Position> & positionsTrue, Position gap){
-    return addGapForTotalityOfList(positionsTrue, gap);
+    return addGapForBrickPositions(positionsTrue, gap);
 }
-
-
-/**
- * verifie si les positions sont sur le plateau
- * @brief Game::inBoard
- * @param positionsInBoard
- * @return
- */
-bool Game::inBoardHeight(const std::vector<Position> & positionsInBoard){
-    for (auto& position : positionsInBoard) {
-        if(!board.inBoardHeight(position)){
-            return false;
-        }
-    }
-    return true;
-}
-
 void Game::BoardPrefill()
 {
-    std::random_device rd; // Utilisé pour initialiser le générateur de nombres aléatoires
-    std::mt19937 gen(rd()); // Générateur de nombres aléatoires
-
+    std::random_device rd;
+    std::mt19937 gen(rd());
 
     int maxHeight = board.getHeight() / 2;
 
-    while(getCurrentNbLines()< maxHeight+3){//rajout du +3 pour car il compte la brique courante et elle prend 3 ligne en general
-        //donc comme ca on compte juste les lignes  apartir du bas
+    // We add 3 to max height because usually a brick has 3 of height .
+    while(getCurrentNbLines()< maxHeight+3){
 
         std::uniform_int_distribution<int> dis(1, 3);
         int randomCommand = dis(gen);
@@ -276,6 +235,7 @@ void Game::BoardPrefill()
             break;
         }
     }
+    board.updateCompleteLines();
 }
 
 /**
@@ -285,20 +245,16 @@ void Game::BoardPrefill()
  */
 int Game::getCurrentNbLines() {
     int currentNbLines = 0;
-
-    // Parcourir le plateau de bas en haut
     for (int row = board.getHeight() - 1; row >= 0; row--) {
-
-        // Vérifier si la ligne a au moins une case rempli
         for (int col = 0; col < board.getWidth(); col++) {
+
+            // Vérifier si la ligne a au moins une case rempli
             if (board(row, col) != CaseType::NOT_OCCUPIED) {
                 currentNbLines++;
                 break;
             }
         }
-
     }
-
     return currentNbLines;
 }
 
@@ -307,10 +263,18 @@ void Game::setBoard(int height, int width)
     board = Board(height, width);
 }
 
-
-bool Game::inBoardWidth(const std::vector<Position> & positionsInBoard){
+bool Game::posIsInBoardWidth(const std::vector<Position> & positionsInBoard){
     for (auto& position : positionsInBoard) {
-        if(!board.inBoardWidth(position)){
+        if(!board.posIsInBoardWidth(position)){
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Game::posIsInBoardHeight(const std::vector<Position> & positionsInBoard){
+    for (auto& position : positionsInBoard) {
+        if(!board.posIsInBoardHeight(position)){
             return false;
         }
     }
@@ -318,12 +282,14 @@ bool Game::inBoardWidth(const std::vector<Position> & positionsInBoard){
 }
 
 /**
- * va verifier si au positions de la direction donnée dans le board qu'il n y ai pas de collisions
- * @brief Game::hasCollisions
- * @param positionsInBoard
- * @param dir
+ * @brief
+ * This method verify that the positions given don't have collisions .
+ * @param
+ * list of positions on the board .
  * @return
+ * A boolean either it has or it doesn't have collisions .
  */
+
 bool Game::hasCollisions(const std::vector<Position> & positionsInBoard){
 
     //si il y a au moins une seule collisions on reeurn false
@@ -333,27 +299,26 @@ bool Game::hasCollisions(const std::vector<Position> & positionsInBoard){
             return true;
         }
     }
-
     return false;
 }
 int Game::calculScore(int ligne , int drop , int niveau){
-    int multiplicateur = 0;
+    int multiplier = 0;
     switch (ligne){
     case 1:
-        multiplicateur = 40 ;
+        multiplier = 40 ;
         break ;
     case 2:
-        multiplicateur = 100 ;
+        multiplier = 100 ;
         break ;
     case 3:
-        multiplicateur = 300 ;
+        multiplier = 300 ;
         break ;
     case 4:
-        multiplicateur = 1200 ;
+        multiplier = 1200 ;
         break ;
     default :
         break ;
     }
-    return (multiplicateur * ligne + drop)* niveau ;
+    return (multiplier * ligne + drop)* niveau ;
 }
 

@@ -7,8 +7,7 @@ Controller::Controller(Game& g, View v): game(g), view(v){};
 
 
 /**
- * va etre executer quand rotate , translate vont etre excuter car ils auront notifier le controller et
- * ce dernier executera la methode update
+ * This method will be executed once the user try to rotate , move the brick .
  * @brief Controller::update
  */
 void Controller::update(){
@@ -18,10 +17,6 @@ void Controller::update(){
     view.displayCommand();
 }
 
-/**
- * Ici il y aura le boucle de jeu
- * @brief Controller::start
- */
 void Controller::start(){
     string userInputCommand;
 
@@ -35,7 +30,7 @@ void Controller::start(){
         makeBoardForUser();
     }
 
-     //demande si on doit preremplir le board
+    //demande si on doit preremplir le board
 
     std::string userInputChoicePopulateOrNot ;
     std::cout<<"Do you want prepopulate the board ? y(es) - n(o)?" << std::endl;
@@ -86,16 +81,32 @@ void Controller::makeBoardForUser()
     std::string userInput ;
     std::cout << "Please enter a height for your board ." << std::endl ;
     std::cout << "(minimum -> 10 , maximum -> 50)" << std::endl;
+    bool isInputValid= false;
     do {
-        std::cin >> userInput ;
-    }while (stoi(userInput) < 10 || stoi(userInput) > 50);
+        try{
+            std::cin >> userInput ;
+            if (stoi(userInput) >= 10 && stoi(userInput) <= 50){
+                isInputValid = true;
+            }
+        }catch(invalid_argument e){
+            cout<< "Invalid input! Please put a number between 10-50" << endl;
+        }
+    }while (!isInputValid); // if the input is valid the loop will stop
+    isInputValid = false ;
     height = stoi(userInput);
 
     std::cout << "Please enter a width for your board ." << std::endl ;
     std::cout << "(minimum -> 10 , maximum -> 50)" << std::endl;
     do {
-        std::cin >> userInput ;
-    }while (stoi(userInput) < 10 || stoi(userInput) > 50);
+        try{
+            std::cin >> userInput ;
+            if (stoi(userInput) >= 10 && stoi(userInput) <= 50){
+                isInputValid = true;
+            }
+        }catch(invalid_argument e){
+            cout<< "Invalid input! Please put a number between 10-50" << endl;
+        }
+    }while (!isInputValid);
     width = stoi(userInput);
     game.setBoard(height, width);
 }

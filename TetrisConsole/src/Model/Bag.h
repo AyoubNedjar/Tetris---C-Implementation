@@ -2,7 +2,7 @@
 #define BAG_H
 
 
-#include "directoryBrick/Brick.h"
+#include "../directoryBrick/Brick.h"
 #include <memory>
 
 class Bag

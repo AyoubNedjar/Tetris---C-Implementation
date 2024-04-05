@@ -1,7 +1,7 @@
 #ifndef BRICK_H
 #define BRICK_H
 
-#include "..\Position.h"
+#include "../Model/Position.h"
 
 #include <vector>
 //#include "..\CommonData.h"

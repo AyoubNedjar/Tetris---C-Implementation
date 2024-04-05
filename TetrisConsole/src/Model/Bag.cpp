@@ -1,11 +1,11 @@
 #include "Bag.h"
-#include "directoryBrick/i.h"
-#include "directoryBrick/j.h"
-#include "directoryBrick/l.h"
-#include "directoryBrick/s.h"
-#include "directoryBrick/square.h"
-#include "directoryBrick/t.h"
-#include "directoryBrick/z.h"
+#include "../directoryBrick/i.h"
+#include "../directoryBrick/j.h"
+#include "../directoryBrick/l.h"
+#include "../directoryBrick/s.h"
+#include "../directoryBrick/square.h"
+#include "../directoryBrick/t.h"
+#include "../directoryBrick/z.h"
 #include <algorithm>
 #include <random>
 
@@ -47,7 +47,7 @@ void Bag::shuffle()
 
 /**
  * @brief Bag::nextShape
- * @return la référence de l objet Brick
+ * @return the reference to the object Brick
  */
 std::unique_ptr<Brick> Bag::nextShape() {
       if (!listOfShapes.empty()) {

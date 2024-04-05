@@ -3,8 +3,8 @@
 
 #include "Bag.h"
 #include "CheckRules.h"
-#include "Observable.h"
-#include "directoryBrick/Brick.h"
+#include "../Observer/Observable.h"
+#include "../directoryBrick/Brick.h"
 #include "CommonData.h"
 class Game: public Observable
 {
@@ -17,14 +17,21 @@ private:
     State state;
     std::vector<Position> listOfCurrentPositions;
     int score;
-    int niveau;
+    int level;
     int TotalLigneComplete;
     bool canDrop;
 
-private :
     void makeBoard();
     void setState(State newState);
 
+    bool applyNewPositionsWhenValid(const std::vector<Position> & newPositions);
+    bool hasCollisions(const std::vector<Position> & positionsInBoard);
+
+    std::vector<Position> addGapForBrickPositions(const std::vector<Position> & positionsTrue, Position gap);
+    Position addGap(const Position& p, Position gap);
+    std::vector<Position> posWithoutOldPos(const std::vector<Position> & newPositionsInBoard);
+
+    int calculScore(int ligne , int drop , int niveau);
 public:
     Game();
 
@@ -36,16 +43,8 @@ public:
 
     std::vector<Position> brickPositionToBoardPosition(const std::vector<Position> & positionsTrue, Position gap);
 
-    std::vector<Position> addGapForTotalityOfList(const std::vector<Position> & positionsTrue, Position gap);
-    bool applyNewPositionsWhenValid(const std::vector<Position> & newPositions);
-    Position addGap(const Position& p, Position gap);
-    bool hasCollisions(const std::vector<Position> & positionsInBoard);
-    std::vector<Position> posWithoutOldPos(const std::vector<Position> & newPositionsInBoard);
-
-    bool inBoardWidth(const std::vector<Position> & positionsTrue);
-    bool inBoardHeight(const std::vector<Position> & positionsTrue);
-
-
+    bool posIsInBoardWidth(const std::vector<Position> & positionsTrue);
+    bool posIsInBoardHeight(const std::vector<Position> & positionsTrue);
 
     void BoardPrefill();
     int getCurrentNbLines();
@@ -61,7 +60,6 @@ public:
     void updateStateIfWon();
     void checkState();
 
-    int calculScore(int ligne , int drop , int niveau);
 };
 
 #endif // GAME_H

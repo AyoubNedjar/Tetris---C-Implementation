@@ -4,9 +4,6 @@
 #include "CommonData.h"
 #include <vector>
 #include "Position.h"
-// #include <memory>
-// #include <map>
-// #include "directoryBrick/Brick.h"
 class Board
 {
 private :
@@ -15,18 +12,15 @@ private :
     std::vector<std::vector<CaseType>> board;
     int countCompletesLines;
 
-
+    std::vector<int> getIndexCompleteLines();
+    void removeCompletesLines(const std::vector<int> &linesList);
 
 public:
     Board();
     Board(int height, int width);
 
-    bool inBoardHeight(Position pos);
-    bool inBoardWidth(Position p);
-
-    std::vector<int> getIndexCompleteLines();//va retourner les lines completes
-    void removeCompletesLines(const std::vector<int> &linesList);//va supprimer les lignes complete, ce qui
-    //veut dire de faire un decallage des brique en glissant tt les blacks du dessus vers le bas
+    bool posIsInBoardHeight(Position pos);
+    bool posIsInBoardWidth(Position p);
     const int getCountCompleteslines() const;
 
     int updateCompleteLines();

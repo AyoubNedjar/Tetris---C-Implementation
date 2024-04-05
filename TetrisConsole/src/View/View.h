@@ -3,7 +3,7 @@
 
 
 
-#include "Game.h"
+#include "../Model/Game.h"
 class View
 {
 public:

@@ -2,9 +2,9 @@
 #define CONTROLLER_H
 
 
-#include "Game.h"
-#include "Observer.h"
-#include "View.h"
+#include "../Model/Game.h"
+#include "../Observer/Observer.h"
+#include "../View/View.h"
 class Controller: public Observer
 {
 private:
