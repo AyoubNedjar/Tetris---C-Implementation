@@ -55,7 +55,9 @@ void Board::removeCompletesLines(const std::vector<int> & linesList)
     }
 
 }
-
+/*
+ * It returns an integer for the number of completed lines .
+ */
 int Board::updateCompleteLines()
 {
     std::vector<int> lineToRemove = getIndexCompleteLines();
