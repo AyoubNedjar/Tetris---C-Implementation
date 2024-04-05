@@ -22,3 +22,11 @@ Le répertoire avec les Brick contient toutes les briques avec lequel le joueur 
 
 Pour faire run le projet , nous devons séléctionner le projet selector 
 et ensuite dans la compilation choisir : Minimum Size Release .
+
+## Bug 
+
+Pour l'instant nous ne trouvons pas de bug dans le jeux et n'avons pas eu recours a de crash pendant la partie ,
+les entrées utilisateurs sont gérés . Aucun warning n'apparait lors de la compilation .
+
+## A améliorer
+On pourrait optimiser certaine méthode mais celle qui me vient le plus en tête c'est la suppression de ligne complète .
