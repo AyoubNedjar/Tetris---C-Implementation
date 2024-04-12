@@ -104,9 +104,9 @@ void View::displayCommand()
     std::cout << "|                      |" << std::endl;
     std::cout << "|     Down: s          |" << std::endl;
     std::cout << "|     Right: d         |" << std::endl;
-    std::cout << "|     Left: a          |" << std::endl;
+    std::cout << "|     Left: q          |" << std::endl;
     std::cout << "|     Clockwise: e     |" << std::endl;
-    std::cout << "|  Counterclockwise: r |" << std::endl;
+    std::cout << "|  Counterclockwise: a |" << std::endl;
     std::cout << "|     Drop: w          |" << std::endl;
     std::cout << "|                      |" << std::endl;
     std::cout << "-----------------------" << std::endl;

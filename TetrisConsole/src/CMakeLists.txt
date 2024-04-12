@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.5)
 
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
 
 add_executable(ProjectStructure
     main.cpp
@@ -24,8 +28,14 @@ add_executable(ProjectStructure
     directoryBrick/z.h          directoryBrick/z.cpp
     directoryBrick/s.h          directoryBrick/s.cpp
     Controller/Controller.h     Controller/Controller.cpp
+    mainwindow.h mainwindow.cpp mainwindow.ui
 
 )
 
 install(TARGETS ProjectStructure
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets )
+find_package( Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets )
+target_link_libraries(ProjectStructure PRIVATE
+       Qt${QT_VERSION_MAJOR}::Widgets)
