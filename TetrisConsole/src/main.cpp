@@ -1,5 +1,4 @@
-#include "View/View.h"
-#include "Controller/Controller.h"
+
 #include "mainwindow.h"
 #include "qapplication.h"
 

@@ -28,10 +28,14 @@ add_executable(ProjectStructure
     directoryBrick/z.h          directoryBrick/z.cpp
     directoryBrick/s.h          directoryBrick/s.cpp
     Controller/Controller.h     Controller/Controller.cpp
-    mainwindow.h mainwindow.cpp mainwindow.ui
+
     tetrisLogo.qrc
-    windowsgame.h windowsgame.cpp windowsgame.ui
-    TetrisBoard.h TetrisBoard.cpp
+
+    UiController.h UiController.cpp
+    mainwindow.h mainwindow.cpp mainwindow.ui
+
+
+
 
 )
 
