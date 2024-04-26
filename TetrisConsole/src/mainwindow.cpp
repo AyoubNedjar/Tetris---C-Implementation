@@ -3,9 +3,17 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    _scene(this)
 {
     ui->setupUi(this);
+
+    QRect viewContentsRect = ui->myGraphicsView->contentsRect();
+    _scene.setSceneRect(viewContentsRect);
+    ui->myGraphicsView->setScene(&_scene);
+
+    _scene.addRect(10,10,25, 25);
+
 }
 
 MainWindow::~MainWindow()
