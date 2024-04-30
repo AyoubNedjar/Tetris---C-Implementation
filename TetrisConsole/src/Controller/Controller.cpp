@@ -80,7 +80,7 @@ void Controller::makeBoardForUser()
     int height , width ;
     std::string userInput ;
     std::cout << "Please enter a height for your board ." << std::endl ;
-    std::cout << "(minimum -> 10 , maximum -> 50)" << std::endl;
+    std::cout << "(minimum -> 10 , maximum -> 20)" << std::endl;
     bool isInputValid= false;
     do {
         try{

@@ -1,8 +1,8 @@
 #ifndef UICONTROLLER_H
 #define UICONTROLLER_H
 
-
 #include "Model/Game.h"
+
 class UiController
 {
 private:
