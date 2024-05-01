@@ -33,6 +33,7 @@ add_executable(ProjectStructure
 
     UiController.h UiController.cpp
     mainwindow.h mainwindow.cpp mainwindow.ui
+    uiboard.h uiboard.cpp
 
 
 
