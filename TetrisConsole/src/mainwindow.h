@@ -18,11 +18,15 @@ public:
 
 private slots:
 
-    void on_pushButton_clicked(bool checked);
+    void on_pushButton_clicked();
+
+    void on_SubmitButton_clicked();
 
 private:
     Ui::MainWindow *ui;
     QGraphicsScene _scene;
+
+    int heightBoard , widthBoard;
 };
 
 #endif // MAINWINDOW_H
