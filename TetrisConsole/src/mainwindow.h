@@ -16,17 +16,24 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    int getHeightBoard();
+    int getWidthBoard();
+    bool isPrefilled();
+
 private slots:
 
-    void on_pushButton_clicked();
-
-    void on_SubmitButton_clicked();
+    void on_SubmitPersoSize_clicked();
+    void on_SubmitSize_clicked();
+    void on_SubmitPrefill_clicked();
 
 private:
     Ui::MainWindow *ui;
     QGraphicsScene _scene;
 
-    int heightBoard , widthBoard;
+    int heightBoard ;
+    int widthBoard;
+    bool prefilled ;
 };
 
 #endif // MAINWINDOW_H
+
