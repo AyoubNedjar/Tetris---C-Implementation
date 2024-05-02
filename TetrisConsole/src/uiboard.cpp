@@ -1,8 +1,8 @@
-#include "uiboard.h"
+/*#include "uiboard.h"
 
 UiBoard::UiBoard(QWidget *parent) : QWidget(parent) {}
 
-void UiBoard::setBoard(const Board &board){
+/*void UiBoard::setBoard(const Board &board){
     uiBoard = board ;
     update();
 }
@@ -46,4 +46,5 @@ void UiBoard::paintEvent(QPaintEvent *event) {
             painter.drawRect(rect);
         }
     }
-}
+*/
+

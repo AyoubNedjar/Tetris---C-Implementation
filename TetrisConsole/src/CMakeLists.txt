@@ -31,7 +31,7 @@ add_executable(ProjectStructure
 
     tetrisLogo.qrc
 
-    UiController.h UiController.cpp
+
     mainwindow.h mainwindow.cpp mainwindow.ui
     uiboard.h uiboard.cpp
 

@@ -3,12 +3,13 @@
 
 #include "qgraphicsscene.h"
 #include <QMainWindow>
-
+#include "Model/Game.h"
+//#include "Observer/Observer.h"
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow //, public Observer
 {
     Q_OBJECT
 
@@ -30,9 +31,13 @@ private:
     Ui::MainWindow *ui;
     QGraphicsScene _scene;
 
-    int heightBoard ;
-    int widthBoard;
-    bool prefilled ;
+    Game game ;
+
+    void makeInvisibleTab();
+    void setNameForTab();
+
+    void paintEvent(QGraphicsScene *scene , const Board &board)const;
+    //void keyReleaseEvent(QKeyEvent *event);
 };
 
 #endif // MAINWINDOW_H

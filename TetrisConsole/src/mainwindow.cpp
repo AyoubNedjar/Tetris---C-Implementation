@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "uiboard.h"
+#include <QGraphicsRectItem>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -8,40 +8,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    /*
-     * Set the name for the different tab.
-     */
-    ui->tabWidget->setTabText(0,"Board personnalisation");
-    ui->tabWidget->setTabText(1,"Board size");
-    ui->tabWidget->setTabText(2,"Board prefilled");
-    ui->tabWidget->setTabText(3,"");
-
-    /*
-     * Make table invisible.
-     */
-    ui->tabWidget->setTabVisible(0,false);
-    ui->tabWidget->setTabVisible(1,false);
-    ui->tabWidget->setTabVisible(2,false);
-    ui->tabWidget->setTabVisible(3,true);
+    setNameForTab();
+    makeInvisibleTab();
 
     QRect viewContentsRect = ui->TetrisBoard->contentsRect();
     _scene.setSceneRect(viewContentsRect);
     ui->TetrisBoard->setScene(&_scene);
-
-    /*
-     * Not exactly working (not centering the board).
-     */
-    int cellSize = 20 ;
-
-    heightBoard = 15;
-    widthBoard = 10;
-
-    ui->TetrisBoard->resize(cellSize* widthBoard , cellSize* heightBoard);
-    for (int row = 0; row < heightBoard ; ++row) {
-        for (int col = 0; col < widthBoard; ++col) {
-            _scene.addRect(col*20 , row * 20, cellSize, cellSize);
-        }
-    }
 }
 
 MainWindow::~MainWindow()
@@ -55,13 +27,13 @@ void MainWindow::on_SubmitPersoSize_clicked()
     if (ui->checkBoxPersoSizeYes->checkState()){
         ui->tabWidget->setTabVisible(0,false);
 
-        //ui->TetrisBoard->resize(20*widthBoard ,20*widthBoard);
+        game.setBoard(10 ,20 );
+
         ui->tabWidget->setTabVisible(2 , true);
     }
     if (ui->checkBoxPersoSizeNo->checkState()) {
         ui->tabWidget->setTabVisible(0,false);
         ui->tabWidget->setTabVisible(1,true);
-
     }
 }
 
@@ -78,8 +50,7 @@ void MainWindow::on_SubmitSize_clicked()
         if (height >= 10 && height <= 25 &&
             width  >= 10 && width  <= 30 ){
 
-            heightBoard = height ;
-            widthBoard = width ;
+            game.setBoard(height , width);
 
             ui->tabWidget->setTabVisible(1,false);
             ui->tabWidget->setTabVisible(2, true);
@@ -91,24 +62,100 @@ void MainWindow::on_SubmitSize_clicked()
 void MainWindow::on_SubmitPrefill_clicked()
 {
     if(ui->checkBoxPrefillYes->checkState()){
-        prefilled = true ;
+        game.BoardPrefill();
 
         ui->tabWidget->setTabVisible(2,false);
         ui->tabWidget->setTabVisible(3,true);
+
+        paintEvent(&_scene , game.getBoard());
     }
     if(ui->CheckBoxPrefillNo->checkState()){
-        prefilled = false ;
 
         ui->tabWidget->setTabVisible(2,false);
         ui->tabWidget->setTabVisible(3,true);
+
+        paintEvent(&_scene , game.getBoard());
     }
 }
-int MainWindow::getHeightBoard(){
-    return heightBoard;
+
+void MainWindow::makeInvisibleTab(){
+    ui->tabWidget->setTabVisible(0,true);
+    ui->tabWidget->setTabVisible(1,false);
+    ui->tabWidget->setTabVisible(2,false);
+    ui->tabWidget->setTabVisible(3,false);
+
 }
-int MainWindow::getWidthBoard(){
-    return widthBoard;
+
+void MainWindow::setNameForTab(){
+    ui->tabWidget->setTabText(0,"");
+    ui->tabWidget->setTabText(1,"Board size");
+    ui->tabWidget->setTabText(2,"Board prefilled");
+    ui->tabWidget->setTabText(3,"Game");
 }
-bool MainWindow::isPrefilled(){
-    return prefilled ;
+void MainWindow::paintEvent(QGraphicsScene *scene , const Board &board) const {
+
+
+    int boardHeight = board.getHeight();
+    int boardWidth = board.getWidth();
+
+    int cellWidth = ui->TetrisBoard->size().width()/boardWidth;
+    int cellHeight= ui->TetrisBoard->size().height()/boardHeight;
+
+    for (int row = 0; row < board.getHeight(); ++row) {
+        for (int col = 0; col < board.getWidth(); ++col) {
+            QGraphicsRectItem  *rect = scene->addRect(col * cellWidth, row * cellHeight, cellWidth, cellHeight);
+            // Determine the color based on the cell type
+            QColor color;
+            switch (board(row, col)) {
+            case CaseType::NOT_OCCUPIED:
+                color = Qt::white;
+                break;
+            case CaseType::SHAPE_I:
+                color = Qt::black;
+                break;
+            case CaseType::SHAPE_J:
+                color = Qt::blue;
+                break ;
+            case CaseType::SHAPE_L:
+                color = Qt::red;
+                break;
+            case CaseType::SHAPE_S:
+                color = Qt::yellow;
+                break;
+            case CaseType::SHAPE_SQUARE:
+                color = Qt::green;
+                break;
+            case CaseType::SHAPE_T:
+                color = Qt::cyan;
+                break ;
+            case CaseType::SHAPE_Z:
+                color = Qt::gray;
+                break;
+            }
+            rect->setBrush(color);
+
+        }
+    }
+    /*void MainWindow::keyReleaseEvent(QKeyEvent *event)
+    {
+        switch (event->key()) {
+        case Qt::Key_Left:
+            _game.move(Direction::LEFT);
+            break;
+        case Qt::Key_Right:
+            _game.move(Direction::RIGHT);
+            break;
+        case Qt::Key_Down:
+            _game.move(Direction::DOWN);
+            break;
+        case Qt::Key_Up:
+            _game.rotateCurrentBrick(RotationClock::CLOCKWISE);
+            break;
+        case Qt::Key_H:
+            commandHelp();
+        default:
+            break;
+        }
+
+    }*/
 }

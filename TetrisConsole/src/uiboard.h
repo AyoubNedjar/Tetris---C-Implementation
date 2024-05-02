@@ -1,4 +1,4 @@
-#ifndef UIBOARD_H
+/*#ifndef UIBOARD_H
 #define UIBOARD_H
 
 #include <QWidget>
@@ -16,10 +16,10 @@ protected:
     void paintEvent(QPaintEvent *event)override;
 
 private:
-    Board uiBoard;
     int cellWidth;
     int cellHeight;
 };
 
 
 #endif // UIBOARD_H
+*/
