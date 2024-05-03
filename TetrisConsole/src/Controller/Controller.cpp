@@ -12,6 +12,7 @@ Controller::Controller(Game& g, View v): game(g), view(v){};
  */
 void Controller::update(){
     game.updateStateIfWon();
+    game.updateLevel();
     view.displayBoard(game.getBoard());
     view.displayInfosGame(game);
     view.displayCommand();
@@ -32,12 +33,12 @@ void Controller::start(){
 
     //demande si on doit preremplir le board
 
-    std::string userInputChoicePopulateOrNot ;
-    std::cout<<"Do you want prepopulate the board ? y(es) - n(o)?" << std::endl;
+    std::string userInputChoicePrefillOrNot ;
+    std::cout<<"Do you want prefill the board ? y(es) - n(o)?" << std::endl;
     do {
-        std::cin >> userInputChoicePopulateOrNot ;
-    }while (userInputChoicePopulateOrNot[0] != 'y' && userInputChoicePopulateOrNot[0] != 'n');
-    if(userInputChoicePopulateOrNot[0] == 'y'){
+        std::cin >> userInputChoicePrefillOrNot ;
+    }while (userInputChoicePrefillOrNot[0] != 'y' && userInputChoicePrefillOrNot[0] != 'n');
+    if(userInputChoicePrefillOrNot[0] == 'y'){
         game.BoardPrefill();
     }
 
@@ -66,9 +67,6 @@ void Controller::start(){
         case 'w' :
             game.drop();
             break ;
-        }
-        if (game.getBoard().getCountCompleteslines()>=10){
-            *(game.getLevel()) = (game.getBoard().getCountCompleteslines()/10)+1 ;
         }
     }
 

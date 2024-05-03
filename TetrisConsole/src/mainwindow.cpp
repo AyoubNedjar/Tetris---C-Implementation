@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->TetrisBoard->setScene(&_scene);
 
     ui->Score->setText(QString::number(game.getScore()));
-    ui->Level->setText(QString::number(*game.getLevel()));
+    ui->Level->setText(QString::number(game.getLevel()));
     ui->LineCompleted->setText(QString::number(game.getBoard().getCountCompleteslines()));
 
 }
@@ -161,10 +161,22 @@ void MainWindow::paintEvent(QGraphicsScene *scene , const Board &board) const {
     }
 }
 void MainWindow::update(){
+    game.updateStateIfWon();
+    game.updateLevel();
+
     paintEvent(&_scene , game.getBoard());
+
     ui->Score->setText(QString::number(game.getScore()));
-    ui->Level->setText(QString::number(*game.getLevel()));
+    ui->Level->setText(QString::number(game.getLevel()));
     ui->LineCompleted->setText(QString::number(game.getBoard().getCountCompleteslines()));
+
+    if (game.getState()==PLAYING){
+        ui->Time->setText("PLAYING");
+    }else if(game.getState()==LOST){
+        ui->Time->setText("LOST");
+    }else {
+        ui->Time->setText("WON");
+    }
 
 }
 void MainWindow::keyReleaseEvent(QKeyEvent *event)

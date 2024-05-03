@@ -81,7 +81,7 @@ void View::displayNbLigneComplete(Game& game){
     cout << "number of line completed : " << game.getBoard().getCountCompleteslines()<< endl;
 }
 void View::displayNiveau(Game& game){
-    cout << "niveau : " << *game.getLevel() << endl;
+    cout << "niveau : " << game.getLevel() << endl;
 }
 
 void View::displayMessage(std::string message)

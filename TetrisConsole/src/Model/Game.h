@@ -18,7 +18,6 @@ private:
     std::vector<Position> listOfCurrentPositions;
     int score;
     int level;
-    int TotalLigneComplete;
     time_t startTime ;
     bool canDrop;
 
@@ -37,8 +36,7 @@ public:
     Game();
 
     int getScore();
-    int *getLevel();
-    int getNbLigneComplete();
+    int getLevel()const;
     const Board& getBoard() const ;
     State getState() const ;
 
@@ -50,7 +48,7 @@ public:
     void BoardPrefill();
     int getCurrentNbLines();
     void setBoard(int height, int width);
-
+    void updateLevel();
 
     int moveBrick(Direction d, bool withDrop);
     void rotate(Rotation sens);
@@ -60,7 +58,6 @@ public:
     bool isGameOver();
     void updateStateIfWon();
     void checkState();
-
 };
 
 #endif // GAME_H
