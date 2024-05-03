@@ -1,21 +1,22 @@
-
+#include "View/View.h"
+#include "Controller/Controller.h"
 #include "mainwindow.h"
 #include "qapplication.h"
 
 using namespace std;
 
-/*int main()
-{
-    Game g;
-    View v;
-    Controller c(g, v);
+// int main()
+// {
+//     Game g;
+//     View v;
+//     Controller c(g, v);
 
-    g.addObserver(&c);
+//     g.addObserver(&c);
 
-    c.start();
+//     c.start();
 
-    return 0;
-}*/
+//     return 0;
+// }
 
 int main(int argc, char *argv[])
 {
@@ -23,6 +24,5 @@ int main(int argc, char *argv[])
 
     MainWindow mainWindow;
     mainWindow.show();
-
     return app.exec();
 }

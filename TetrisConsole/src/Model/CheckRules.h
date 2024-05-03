@@ -1,8 +1,8 @@
 #ifndef CHECKRULES_H
 #define CHECKRULES_H
 
+#include <time.h>
 #include "Board.h"
-
 class CheckRules
 {
 
@@ -15,7 +15,7 @@ private:
 public:
     CheckRules();
     CheckRules(int scoreMax, int timeMax, int linemax , int levelMax);
-    bool isTimeOver(int currentTime);
+    bool isTimeOver(time_t startTime);
     bool isScoreOver(int currentScore);
     bool isLineComplete(Board& board);
     bool isLevelOver(int currentLevel);

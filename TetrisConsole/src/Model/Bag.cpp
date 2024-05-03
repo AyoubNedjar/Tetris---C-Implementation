@@ -57,7 +57,7 @@ std::unique_ptr<Brick> Bag::nextShape() {
           listOfShapes.erase(listOfShapes.begin());
           // Retourner le pointeur à la brique déplacée
           return firstBrickPtr;
-      } else {
+      } else     {
           shuffle();
           auto firstBrickPtr = std::move(listOfShapes.front());
           listOfShapes.erase(listOfShapes.begin());

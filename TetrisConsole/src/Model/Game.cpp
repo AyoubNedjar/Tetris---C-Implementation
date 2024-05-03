@@ -2,7 +2,7 @@
 #include <random>
 #include <utility>
 
-Game::Game(): rules(10000, 10, 50 , 20), state(State::PLAYING)  , score(0) , level(1) , TotalLigneComplete(0){
+Game::Game(): rules(10000, 60*60 /* nbSecond*nbMinute */, 50 , 20), state(State::PLAYING)  , score(0) ,startTime(NULL) , level(1) , TotalLigneComplete(0){
     canDrop = true;
     currentBrick = bag.nextShape();
     insertBrickToBoard();
@@ -16,7 +16,7 @@ State Game::getState() const {
     return state ;
 }
 
-int * Game::getNiveau(){
+int * Game::getLevel(){
     return &level ;
 }
 

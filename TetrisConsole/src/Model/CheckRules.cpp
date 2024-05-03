@@ -1,4 +1,4 @@
-
+#include <time.h>
 #include "CheckRules.h"
 /**
  * donne des valeurs par defaut pour faire
@@ -18,4 +18,8 @@ bool CheckRules::isLineComplete(Board& board){
 }
 bool CheckRules::isLevelOver(int currentLevel){
     return (currentLevel >= levelMax);
+}
+bool CheckRules::isTimeOver(time_t startTime){
+    time_t endTime =  startTime + timeMax;
+    return (time(NULL) >= endTime);
 };

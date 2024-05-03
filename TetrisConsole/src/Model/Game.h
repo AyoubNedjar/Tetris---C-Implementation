@@ -19,6 +19,7 @@ private:
     int score;
     int level;
     int TotalLigneComplete;
+    time_t startTime ;
     bool canDrop;
 
     void makeBoard();
@@ -36,7 +37,7 @@ public:
     Game();
 
     int getScore();
-    int *getNiveau();
+    int *getLevel();
     int getNbLigneComplete();
     const Board& getBoard() const ;
     State getState() const ;

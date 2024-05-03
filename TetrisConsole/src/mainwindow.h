@@ -3,13 +3,14 @@
 
 #include "qgraphicsscene.h"
 #include <QMainWindow>
+
 #include "Model/Game.h"
-//#include "Observer/Observer.h"
+#include "Observer/Observer.h"
+
 namespace Ui {
 class MainWindow;
 }
-
-class MainWindow : public QMainWindow //, public Observer
+class MainWindow : public QMainWindow , public Observer
 {
     Q_OBJECT
 
@@ -27,6 +28,8 @@ private slots:
     void on_SubmitSize_clicked();
     void on_SubmitPrefill_clicked();
 
+    void on_ButtonStart_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene _scene;
@@ -37,7 +40,9 @@ private:
     void setNameForTab();
 
     void paintEvent(QGraphicsScene *scene , const Board &board)const;
-    //void keyReleaseEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
+    void update();
+
 };
 
 #endif // MAINWINDOW_H

@@ -67,8 +67,8 @@ void Controller::start(){
             game.drop();
             break ;
         }
-        if (game.getNbLigneComplete()>=10){
-            *(game.getNiveau()) = (game.getNbLigneComplete()/10)+1 ;
+        if (game.getBoard().getCountCompleteslines()>=10){
+            *(game.getLevel()) = (game.getBoard().getCountCompleteslines()/10)+1 ;
         }
     }
 
