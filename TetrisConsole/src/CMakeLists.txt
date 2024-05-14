@@ -29,7 +29,7 @@ add_executable(ProjectStructure
     directoryBrick/s.h          directoryBrick/s.cpp
     Controller/Controller.h     Controller/Controller.cpp
 
-    tetrisLogo.qrc
+
 
 
     mainwindow.h mainwindow.cpp mainwindow.ui
