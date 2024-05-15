@@ -1,4 +1,4 @@
-    #include "uicontroller.h"
+#include "uicontroller.h"
 #include "ui_mainwindow.h"
 
 #include <QKeyEvent>

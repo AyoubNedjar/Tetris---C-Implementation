@@ -7,10 +7,10 @@ TEST_CASE( "Test of Game") {
     SECTION("Test moveBrick method") {
         Game game;
         int initialScore = game.getScore();
-        int initialNbLigneComplete = game.getNbLigneComplete();
+        int initialNbLigneComplete = game.getBoard().getCountCompleteslines();
         game.moveBrick(Direction::DOWN, false);
         REQUIRE(game.getScore() == initialScore);
-        REQUIRE(game.getNbLigneComplete() == initialNbLigneComplete); // The score didn't change because it's a move not a drop .
+        REQUIRE(game.getBoard().getCountCompleteslines() == initialNbLigneComplete); // The score didn't change because it's a move not a drop .
     }
     SECTION("Test drop method"){
         Game game;

@@ -30,15 +30,8 @@ add_executable(ProjectStructure
     Controller/Controller.h     Controller/Controller.cpp
 
 
-
-
-    mainwindow.h mainwindow.cpp mainwindow.ui
-    uicontroller.h uicontroller.cpp
-
-
-
-
-
+    Ui/mainwindow.h Ui/mainwindow.cpp mainwindow.ui
+    Ui/uicontroller.h Ui/uicontroller.cpp
 )
 
 install(TARGETS ProjectStructure

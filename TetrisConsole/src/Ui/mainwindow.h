@@ -6,7 +6,7 @@
 #include <string>
 
 #include "qgraphicsscene.h"
-#include "Model/Game.h"
+#include "../Model/Game.h"
 
 namespace Ui {
 class MainWindow;

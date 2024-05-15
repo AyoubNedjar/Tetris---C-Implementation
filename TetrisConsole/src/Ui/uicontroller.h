@@ -1,10 +1,10 @@
-    #ifndef UICONTROLLER_H
+#ifndef UICONTROLLER_H
 #define UICONTROLLER_H
 
 #include <QMainWindow>
 
-#include "Model/Game.h"
-#include "Observer/Observer.h"
+#include "../Model/Game.h"
+#include "../Observer/Observer.h"
 #include "mainwindow.h"
 
 class UiController :public Observer

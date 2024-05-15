@@ -1,8 +1,8 @@
 #include "View/View.h"
 #include "Controller/Controller.h"
-#include "mainwindow.h"
+#include "Ui/mainwindow.h"
 #include "qapplication.h"
-#include "uicontroller.h"
+#include "Ui/uicontroller.h"
 
 using namespace std;
 
