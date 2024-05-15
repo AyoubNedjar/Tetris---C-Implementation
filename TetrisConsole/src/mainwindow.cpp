@@ -109,6 +109,9 @@ Ui::MainWindow * MainWindow::getUi(){
 QGraphicsScene * MainWindow::getScene(){
     return &_scene;
 }
+void MainWindow::setMoveInterval(int newInterval) {
+    MOVE_INTERVAL = newInterval;
+}
 
 
 void MainWindow::makeInvisibleTab(){

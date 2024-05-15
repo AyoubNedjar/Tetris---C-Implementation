@@ -1,4 +1,4 @@
-#include "uicontroller.h"
+    #include "uicontroller.h"
 #include "ui_mainwindow.h"
 
 #include <QKeyEvent>
@@ -13,6 +13,7 @@ void UiController::update(){
     game.updateStateIfWon();
     game.updateLevel();
 
+    mainWindow.setMoveInterval(game.getSpeedLevel(game.getLevel())/60000);
     mainWindow.paintEvent(mainWindow.getScene(), game.getBoard());
 
     mainWindow.getUi()->Score->setText(QString::number(game.getScore()));

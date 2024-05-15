@@ -25,6 +25,7 @@ public:
     Game *getGame();
     void keyReleaseEvent(QKeyEvent *event);
 
+    void setMoveInterval(int newInterval);
 private slots:
 
     void on_SubmitPersoSize_clicked();
@@ -44,7 +45,7 @@ private:
 
     QTimer* timer;
 
-    static const int MOVE_INTERVAL = 1000; // Time interval for moving the brick down in milliseconds
+    int MOVE_INTERVAL; // Time interval for moving the brick down in milliseconds
     void moveBrickDown();
 
 };

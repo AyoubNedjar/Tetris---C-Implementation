@@ -20,6 +20,7 @@ private:
     int level;
     time_t startTime ;
     bool canDrop;
+    std::vector<int> listOfSpeedLevel ;
 
     void makeBoard();
     void setState(State newState);
@@ -58,6 +59,7 @@ public:
     bool isGameOver();
     void updateStateIfWon();
     void checkState();
+    int getSpeedLevel(int lvl);
 };
 
 #endif // GAME_H

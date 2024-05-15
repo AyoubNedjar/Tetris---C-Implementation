@@ -11,6 +11,8 @@ Game::Game(): rules(10000000 , 60*60 /* nbSecond*nbMinute */, 200 , 20),
     canDrop = true;
     currentBrick = bag.nextShape();
     insertBrickToBoard();
+    listOfSpeedLevel = {60000 , 53000 , 49000 , 45000 , 41000 , 37000 , 33000 , 28000 , 23000 , 18000 ,
+    13000, 9000 , 8000 , 8000 , 7000 , 6000 ,5000 , 4000 , 3000 , 2000 };
 }
 
 const Board& Game::getBoard()const{
@@ -323,5 +325,8 @@ int Game::calculScore(int ligne , int drop , int niveau){
 }
 void Game::updateLevel(){
     level = (board.getCountCompleteslines()/10)+1 ;
+}
+int Game::getSpeedLevel(int lvl){
+    return listOfSpeedLevel.at(lvl-1);
 }
 
