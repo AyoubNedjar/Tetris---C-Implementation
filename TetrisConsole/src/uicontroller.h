@@ -1,4 +1,4 @@
-#ifndef UICONTROLLER_H
+    #ifndef UICONTROLLER_H
 #define UICONTROLLER_H
 
 #include <QMainWindow>
@@ -14,6 +14,7 @@ public:
 
     void update() override;
     void start();
+    void moveBrickDown();
 
 private:
     MainWindow& mainWindow ;

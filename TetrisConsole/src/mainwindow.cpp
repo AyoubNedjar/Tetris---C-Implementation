@@ -128,9 +128,10 @@ void MainWindow::setNameForTab(){
 
 void MainWindow::on_ButtonStart_clicked()
 {
-    while(game.getState()!=State::LOST){
-        game.moveBrick(Direction::DOWN , false);
-    }
+    timer = new QTimer(this);
+
+    connect(timer, &QTimer::timeout, this, &MainWindow::moveBrickDown);
+    timer->start(MOVE_INTERVAL);
 }
 
 void MainWindow::paintEvent(QGraphicsScene *scene , const Board &board) const {
@@ -201,4 +202,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
     default:
         break;
     }
+}
+void MainWindow::moveBrickDown(){
+    game.moveBrick(Direction::DOWN , false);
 }

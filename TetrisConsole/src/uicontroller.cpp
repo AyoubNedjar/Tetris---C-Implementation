@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <QKeyEvent>
+#include <QTimer>
 
 UiController::UiController(Game& g , MainWindow& mw) : game(g) , mainWindow(mw) {
 

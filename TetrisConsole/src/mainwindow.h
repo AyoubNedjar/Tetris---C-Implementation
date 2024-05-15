@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTimer>
 
 #include "qgraphicsscene.h"
 #include "Model/Game.h"
@@ -40,6 +41,11 @@ private:
 
     void makeInvisibleTab();
     void setNameForTab();
+
+    QTimer* timer;
+
+    static const int MOVE_INTERVAL = 1000; // Time interval for moving the brick down in milliseconds
+    void moveBrickDown();
 
 };
 
