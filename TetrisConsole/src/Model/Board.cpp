@@ -67,14 +67,14 @@ int Board::updateCompleteLines()
 
 void Board::insert(const std::vector<Position> & listPositions, CaseType type)
 {
-    for (auto& p : listPositions) {
-        board[p.getX()][p.getY()] = type;
+    for (auto& posOnBoard : listPositions) {
+        board[posOnBoard.getX()][posOnBoard.getY()] = type;
     }
 }
 
-void Board::deleteOldBrick(Position p)
+void Board::deleteOldBrick(Position pos)
 {
-    board[p.getX()][p.getY()] = CaseType::NOT_OCCUPIED;
+    board[pos.getX()][pos.getY()] = CaseType::NOT_OCCUPIED;
 }
 
 const CaseType &Board::operator()(int row, int col) const

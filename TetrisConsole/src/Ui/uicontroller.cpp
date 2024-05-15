@@ -23,6 +23,9 @@ void UiController::update(){
         mainWindow.getUi()->Time->setText(QString::number(game.getTimeRemaining()/60) +" : "+
                                           QString::number(game.getTimeRemaining()%60));
     }else if (game.getState() == State::LOST){
+        /*
+         * Will sent an alert to the player .
+         */
         QMessageBox messageBox;
         messageBox.setWindowTitle("You've lost");
         messageBox.setText("Thank you for playing Tetris!");
@@ -33,6 +36,9 @@ void UiController::update(){
         messageBox.exec();
         mainWindow.close();
     }else {
+        /*
+         * Will sent an alert to the player .
+         */
         QMessageBox messageBox;
         messageBox.setWindowTitle("You've won");
         messageBox.setText("Thank you for playing Tetris!");

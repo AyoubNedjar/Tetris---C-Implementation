@@ -30,7 +30,7 @@ private:
 
     std::vector<Position> addGapForBrickPositions(const std::vector<Position> & positionsTrue, Position gap);
     Position addGap(const Position& p, Position gap);
-    std::vector<Position> posWithoutOldPos(const std::vector<Position> & newPositionsInBoard);
+    std::vector<Position> posBeforeMoving(const std::vector<Position> & newPositionsInBoard);
 
     int calculScore(int ligne , int drop , int niveau);
 public:

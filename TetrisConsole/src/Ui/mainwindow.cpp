@@ -4,6 +4,9 @@
 #include <QKeyEvent>
 #include <QString>
 
+/*
+ * Constructor of MainWindow which will take a game ;
+ */
 MainWindow::MainWindow(Game * g, QWidget *parent ) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -144,6 +147,9 @@ void MainWindow::on_ButtonStart_clicked()
     timer->start(MOVE_INTERVAL);
 }
 
+/*
+ * Will Paint the board with the bricks .
+ */
 void MainWindow::paintEvent(QGraphicsScene *scene , const Board &board) const {
 
 
@@ -153,6 +159,10 @@ void MainWindow::paintEvent(QGraphicsScene *scene , const Board &board) const {
     int cellWidth = ui->TetrisBoard->size().width()/boardWidth;
     int cellHeight= ui->TetrisBoard->size().height()/boardHeight;
 
+    /*
+     *Based on the window size that i gave in the mainWindow.ui .
+     *It will create rectangle/square on the board .
+     */
     for (int row = 0; row < board.getHeight(); ++row) {
         for (int col = 0; col < board.getWidth(); ++col) {
             QGraphicsRectItem  *rect = scene->addRect(col * cellWidth, row * cellHeight, cellWidth, cellHeight);
@@ -188,6 +198,9 @@ void MainWindow::paintEvent(QGraphicsScene *scene , const Board &board) const {
         }
     }
 }
+/*
+ * It will allow us to press the key on the keyboard and move it on the game .
+ */
 void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
     if(gameActive){

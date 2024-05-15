@@ -40,13 +40,13 @@ void Game::insertBrickToBoard(){
 
     listOfCurrentPositions = currentBrick->getPositionsTrue();
     Position inputPosition(0, board.getWidth()/2);
-    Position gap((inputPosition.getX()-listOfCurrentPositions.front().getX()),
+    Position gapFromTheBoard((inputPosition.getX()-listOfCurrentPositions.front().getX()),
                  (inputPosition.getY()-listOfCurrentPositions.front().getY()));
     //it calculates the distance between the brick's shape and the left border .
 
-    listOfCurrentPositions = brickPositionToBoardPosition(listOfCurrentPositions, gap);
-    for(auto &pos : listOfCurrentPositions){
-        if(board.getType(pos) != CaseType::NOT_OCCUPIED){
+    listOfCurrentPositions = brickPositionToBoardPosition(listOfCurrentPositions, gapFromTheBoard);
+    for(auto &posOfBrick : listOfCurrentPositions){
+        if(board.getType(posOfBrick) != CaseType::NOT_OCCUPIED){
             setState(State::LOST);
         }
     }
@@ -82,13 +82,13 @@ void Game::nextShape(){
  */
 int Game::moveBrick(Direction dir, bool WithDrop){
 
-    Position p;
-    Position delta = p.getPositionFromDirection(dir);
+    Position posTemp;
+    Position delta = posTemp.getPositionFromDirection(dir);
     int nbLineCompleted = 0;
     std::vector<Position> newPositionsAfterDirection;
 
-    for(auto& p1 :listOfCurrentPositions){
-        newPositionsAfterDirection.push_back(addGap(p1, delta));
+    for(auto& posOfBrick :listOfCurrentPositions){
+        newPositionsAfterDirection.push_back(addGap(posOfBrick, delta));
     }
     /*
      * If the next positions don't have collisions and there is no collisions with the next ones . We then place the brick at
@@ -129,8 +129,14 @@ void Game::rotate(Rotation sens){
     //It's the gap between the current brick positions and the same brick but with the rotation applied
 
     newPositionsAfterRotate = brickPositionToBoardPosition(rotatePositionsInBrick, gapBetweenCurrentPosAndBrickPos);
-    applyNewPositionsWhenValid(newPositionsAfterRotate);
-    //We the rotation is not applied on the board if the brick is obstruct or not in the board.
+    if (!applyNewPositionsWhenValid(newPositionsAfterRotate)){
+        if (sens == Rotation::CLOCKWISE)
+            currentBrick->rotate(Rotation::ANTI_CLOCKWISE);
+        else {
+            currentBrick->rotate(Rotation::CLOCKWISE);
+        }
+    }
+    //If the rotation is not applied on the board if the brick is obstruct or not in the board.
     notifyObservers();
 }
 
@@ -150,9 +156,9 @@ void Game::drop()
 
 bool Game::applyNewPositionsWhenValid(const std::vector<Position> &newPositions)
 {
-    if(posIsInBoardHeight(newPositions) && !hasCollisions(posWithoutOldPos(newPositions))){
-        for(auto& pos : listOfCurrentPositions){
-            board.deleteOldBrick(pos);
+    if(posIsInBoardHeight(newPositions) && !hasCollisions(posBeforeMoving(newPositions))){
+        for(auto& posOfTheBrick : listOfCurrentPositions){
+            board.deleteOldBrick(posOfTheBrick);
         }
 
         board.insert(newPositions, currentBrick->getType() );
@@ -174,7 +180,7 @@ bool Game::applyNewPositionsWhenValid(const std::vector<Position> &newPositions)
  * The valid vector of positions .
  */
 
-std::vector<Position> Game::posWithoutOldPos(const std::vector<Position> &newPositionsInBoard)
+std::vector<Position> Game::posBeforeMoving(const std::vector<Position> &newPositionsInBoard)
 {
     std::vector<Position> realNewPositions;
 
@@ -297,9 +303,9 @@ bool Game::posIsInBoardHeight(const std::vector<Position> & positionsInBoard){
 bool Game::hasCollisions(const std::vector<Position> & positionsInBoard){
 
     //si il y a au moins une seule collisions on reeurn false
-    for(auto& p :positionsInBoard){
+    for(auto& posOnBoard :positionsInBoard){
 
-        if(board.getType(p) != NOT_OCCUPIED){
+        if(board.getType(posOnBoard) != NOT_OCCUPIED){
             return true;
         }
     }
