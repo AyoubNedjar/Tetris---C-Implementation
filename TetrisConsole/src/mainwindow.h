@@ -38,7 +38,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene _scene;
-
+    bool gameActive;
     Game& game ;
 
     void makeInvisibleTab();

@@ -9,9 +9,9 @@ MainWindow::MainWindow(Game * g, QWidget *parent ) :
     ui(new Ui::MainWindow),
     game(*g)
 {
+    gameActive = false ;
     MOVE_INTERVAL = 1000 ;
     ui->setupUi(this);
-
     setNameForTab();
     makeInvisibleTab();
 
@@ -41,13 +41,13 @@ void MainWindow::on_SubmitPersoSize_clicked()
 
         game.setBoard(20,10 );
         game.insertBrickToBoard();
+
         ui->tabWidget->setTabVisible(1 , true);
 
         ui->tabWidget->removeTab(0);
     }
     if (ui->checkBoxPersoSizeNo->checkState()) {
         //ui->tabWidget->setTabVisible(0,false);
-        game.insertBrickToBoard();
 
         ui->tabWidget->removeTab(0);
 
@@ -70,6 +70,7 @@ void MainWindow::on_SubmitSize_clicked()
 
             game.setBoard(height , width);
 
+            game.insertBrickToBoard();
             //ui->tabWidget->setTabVisible(1,false);
 
             ui->tabWidget->removeTab(0);
@@ -134,6 +135,7 @@ void MainWindow::setNameForTab(){
 
 void MainWindow::on_ButtonStart_clicked()
 {
+    gameActive = true;
     ui->ButtonStart->deleteLater();
     game.setTimeStart();
     timer = new QTimer(this);
@@ -188,27 +190,29 @@ void MainWindow::paintEvent(QGraphicsScene *scene , const Board &board) const {
 }
 void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
-    switch (event->key()) {
-    case Qt::Key_Left:
-        game.moveBrick(Direction::LEFT,false);
-        break;
-    case Qt::Key_Right:
-        game.moveBrick(Direction::RIGHT,false);
-        break;
-    case Qt::Key_Down:
-        game.moveBrick(Direction::DOWN,false);
-        break;
-    case Qt::Key_E:
-        game.rotate(Rotation::CLOCKWISE);
-        break;
-    case Qt::Key_A:
-        game.rotate(Rotation::ANTI_CLOCKWISE);
-        break;
-    case Qt::Key_Space:
-        game.drop();
-        break ;
-    default:
-        break;
+    if(gameActive){
+        switch (event->key()) {
+        case Qt::Key_Left:
+            game.moveBrick(Direction::LEFT,false);
+            break;
+        case Qt::Key_Right:
+            game.moveBrick(Direction::RIGHT,false);
+            break;
+        case Qt::Key_Down:
+            game.moveBrick(Direction::DOWN,false);
+            break;
+        case Qt::Key_E:
+            game.rotate(Rotation::CLOCKWISE);
+            break;
+        case Qt::Key_A:
+            game.rotate(Rotation::ANTI_CLOCKWISE);
+            break;
+        case Qt::Key_Space:
+            game.drop();
+            break ;
+        default:
+            break;
+        }
     }
 }
 void MainWindow::moveBrickDown(){
