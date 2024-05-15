@@ -2,7 +2,7 @@
 #include <random>
 #include <utility>
 
-Game::Game(): rules(10000 , 60*60 /* nbSecond*nbMinute */, 50 , 20),
+Game::Game(): rules(10000000 , 60*60 /* nbSecond*nbMinute */, 200 , 20),
     state(State::PLAYING),
     score(0),
     startTime(NULL),

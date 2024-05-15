@@ -2,6 +2,7 @@
 #include "Controller/Controller.h"
 #include "mainwindow.h"
 #include "qapplication.h"
+#include "uicontroller.h"
 
 using namespace std;
 
@@ -22,7 +23,9 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    MainWindow mainWindow;
-    mainWindow.show();
+    Game game;
+    MainWindow mw(&game) ;
+    UiController uc(game , mw);
+    uc.start();
     return app.exec();
 }

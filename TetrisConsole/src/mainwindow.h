@@ -1,26 +1,28 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "qgraphicsscene.h"
 #include <QMainWindow>
 
+#include "qgraphicsscene.h"
 #include "Model/Game.h"
-#include "Observer/Observer.h"
 
 namespace Ui {
 class MainWindow;
 }
-class MainWindow : public QMainWindow , public Observer
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(Game * game = nullptr , QWidget *parent = nullptr);
     ~MainWindow();
 
-    int getHeightBoard();
-    int getWidthBoard();
-    bool isPrefilled();
+    Ui::MainWindow *getUi();
+    QGraphicsScene *getScene();
+
+    void paintEvent(QGraphicsScene *scene , const Board &board)const;
+    Game *getGame();
+    void keyReleaseEvent(QKeyEvent *event);
 
 private slots:
 
@@ -34,14 +36,10 @@ private:
     Ui::MainWindow *ui;
     QGraphicsScene _scene;
 
-    Game game ;
+    Game& game ;
 
     void makeInvisibleTab();
     void setNameForTab();
-
-    void paintEvent(QGraphicsScene *scene , const Board &board)const;
-    void keyReleaseEvent(QKeyEvent *event);
-    void update();
 
 };
 

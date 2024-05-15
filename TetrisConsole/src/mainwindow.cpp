@@ -4,13 +4,13 @@
 #include <QKeyEvent>
 #include <QString>
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(Game * g, QWidget *parent ) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    game(*g)
 {
     ui->setupUi(this);
 
-    game.addObserver(this);
     setNameForTab();
     makeInvisibleTab();
 
@@ -82,15 +82,16 @@ void MainWindow::on_SubmitPrefill_clicked()
     if(ui->checkBoxPrefillYes->checkState()){
         game.BoardPrefill();
 
+        paintEvent(&_scene , game.getBoard());
         //ui->tabWidget->setTabVisible(2,false);
 
         ui->tabWidget->setTabVisible(1,true);
 
         ui->tabWidget->removeTab(0);
 
-        paintEvent(&_scene , game.getBoard());
     }
     if(ui->CheckBoxPrefillNo->checkState()){
+        paintEvent(&_scene , game.getBoard());
 
         //ui->tabWidget->setTabVisible(2,false);
 
@@ -98,9 +99,17 @@ void MainWindow::on_SubmitPrefill_clicked()
 
         ui->tabWidget->removeTab(0);
 
-        paintEvent(&_scene , game.getBoard());
     }
 }
+
+Ui::MainWindow * MainWindow::getUi(){
+    return ui;
+}
+
+QGraphicsScene * MainWindow::getScene(){
+    return &_scene;
+}
+
 
 void MainWindow::makeInvisibleTab(){
     ui->tabWidget->setTabVisible(0,true);
@@ -116,6 +125,14 @@ void MainWindow::setNameForTab(){
     ui->tabWidget->setTabText(2,"Board prefilled");
     ui->tabWidget->setTabText(3,"Game");
 }
+
+void MainWindow::on_ButtonStart_clicked()
+{
+    while(game.getState()!=State::LOST){
+        game.moveBrick(Direction::DOWN , false);
+    }
+}
+
 void MainWindow::paintEvent(QGraphicsScene *scene , const Board &board) const {
 
 
@@ -160,25 +177,6 @@ void MainWindow::paintEvent(QGraphicsScene *scene , const Board &board) const {
         }
     }
 }
-void MainWindow::update(){
-    game.updateStateIfWon();
-    game.updateLevel();
-
-    paintEvent(&_scene , game.getBoard());
-
-    ui->Score->setText(QString::number(game.getScore()));
-    ui->Level->setText(QString::number(game.getLevel()));
-    ui->LineCompleted->setText(QString::number(game.getBoard().getCountCompleteslines()));
-
-    if (game.getState()==PLAYING){
-        ui->Time->setText("PLAYING");
-    }else if(game.getState()==LOST){
-        ui->Time->setText("LOST");
-    }else {
-        ui->Time->setText("WON");
-    }
-
-}
 void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
     switch (event->key()) {
@@ -202,12 +200,5 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
         break ;
     default:
         break;
-    }
-}
-
-void MainWindow::on_ButtonStart_clicked()
-{
-    while(game.getState()!=State::LOST){
-        game.moveBrick(Direction::DOWN , false);
     }
 }

@@ -2,13 +2,13 @@
 #include "CommonData.h"
 
 Board::Board():height(20), width(10){
-    countCompletesLines = 9;
+    countCompletesLines = 0;
     board.resize(height, std::vector<CaseType>(width, CaseType::NOT_OCCUPIED));
 
 };
 
 Board::Board(int height,int width):height(height), width(width){
-    countCompletesLines = 9;
+    countCompletesLines = 0;
     board.resize(height, std::vector<CaseType>(width, CaseType::NOT_OCCUPIED));
 };
 
