@@ -5,12 +5,10 @@
 Game::Game(): rules(10000000 , 60*60 /* nbSecond*nbMinute */, 200 , 20),
     state(State::PLAYING),
     score(0),
-    startTime(NULL),
     level(1){
 
     canDrop = true;
     currentBrick = bag.nextShape();
-    insertBrickToBoard();
     listOfSpeedLevel = {60000 , 53000 , 49000 , 45000 , 41000 , 37000 , 33000 , 28000 , 23000 , 18000 ,
     13000, 9000 , 8000 , 8000 , 7000 , 6000 ,5000 , 4000 , 3000 , 2000 };
 }
@@ -32,6 +30,10 @@ int Game::getScore(){
 
 void Game::setState(State newState){
     state = newState ;
+}
+
+void Game::setTimeStart(){
+    startTime = time(nullptr);
 }
 
 void Game::insertBrickToBoard(){
@@ -60,7 +62,7 @@ bool Game::isGameOver()
 
 void Game::updateStateIfWon()
 {
-    if(rules.isLineComplete(board) || rules.isScoreOver(score) || rules.isLevelOver(level)){
+    if(rules.isLineComplete(board) || rules.isScoreOver(score) || rules.isLevelOver(level) || rules.isTimeOver(time_t(nullptr))){
         state = State::WON;
     }
 }
@@ -328,5 +330,13 @@ void Game::updateLevel(){
 }
 int Game::getSpeedLevel(int lvl){
     return listOfSpeedLevel.at(lvl-1);
+}
+int Game::getTimeRemaining(){
+    time_t currentTime = time(nullptr);
+    int timeElapsed = currentTime -  startTime ;
+    return rules.getTimeMax() - timeElapsed ;
+}
+int Game::getTimeMax(){
+    return rules.getTimeMax();
 }
 

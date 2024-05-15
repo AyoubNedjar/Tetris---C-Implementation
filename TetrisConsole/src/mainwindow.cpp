@@ -9,6 +9,7 @@ MainWindow::MainWindow(Game * g, QWidget *parent ) :
     ui(new Ui::MainWindow),
     game(*g)
 {
+    MOVE_INTERVAL = 1000 ;
     ui->setupUi(this);
 
     setNameForTab();
@@ -21,7 +22,8 @@ MainWindow::MainWindow(Game * g, QWidget *parent ) :
     ui->Score->setText(QString::number(game.getScore()));
     ui->Level->setText(QString::number(game.getLevel()));
     ui->LineCompleted->setText(QString::number(game.getBoard().getCountCompleteslines()));
-
+    ui->Time->setText(QString::number(game.getTimeMax()/60) + " : " +
+                      QString::number(game.getTimeMax()%60));
 }
 
 MainWindow::~MainWindow()
@@ -38,13 +40,14 @@ void MainWindow::on_SubmitPersoSize_clicked()
         ui->tabWidget->removeTab(0);
 
         game.setBoard(20,10 );
-
+        game.insertBrickToBoard();
         ui->tabWidget->setTabVisible(1 , true);
 
         ui->tabWidget->removeTab(0);
     }
     if (ui->checkBoxPersoSizeNo->checkState()) {
         //ui->tabWidget->setTabVisible(0,false);
+        game.insertBrickToBoard();
 
         ui->tabWidget->removeTab(0);
 
@@ -131,6 +134,8 @@ void MainWindow::setNameForTab(){
 
 void MainWindow::on_ButtonStart_clicked()
 {
+    ui->ButtonStart->deleteLater();
+    game.setTimeStart();
     timer = new QTimer(this);
 
     connect(timer, &QTimer::timeout, this, &MainWindow::moveBrickDown);

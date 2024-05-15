@@ -21,5 +21,9 @@ bool CheckRules::isLevelOver(int currentLevel){
 }
 bool CheckRules::isTimeOver(time_t startTime){
     time_t endTime =  startTime + timeMax;
-    return (time(NULL) >= endTime);
-};
+    return (time(NULL) < endTime);
+}
+int CheckRules::getTimeMax(){
+    return timeMax;
+}
+;

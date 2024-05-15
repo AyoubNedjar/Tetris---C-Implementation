@@ -19,7 +19,7 @@ public:
     bool isScoreOver(int currentScore);
     bool isLineComplete(Board& board);
     bool isLevelOver(int currentLevel);
-
+    int getTimeMax() ;
 };
 
 #endif // CHECKRULES_H

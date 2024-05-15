@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <property name="movable">
      <bool>false</bool>
@@ -437,19 +437,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <bool>true</bool>
        </property>
       </widget>
-     </widget>
-     <widget class="QPushButton" name="pushButton_3">
-      <property name="geometry">
-       <rect>
-        <x>950</x>
-        <y>280</y>
-        <width>93</width>
-        <height>29</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Quit</string>
-      </property>
      </widget>
      <widget class="QTextEdit" name="textEdit">
       <property name="geometry">

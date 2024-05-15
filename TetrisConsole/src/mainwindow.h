@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTimer>
+#include <string>
 
 #include "qgraphicsscene.h"
 #include "Model/Game.h"
@@ -47,6 +48,7 @@ private:
 
     int MOVE_INTERVAL; // Time interval for moving the brick down in milliseconds
     void moveBrickDown();
+    std::string makeTimeInMin();
 
 };
 

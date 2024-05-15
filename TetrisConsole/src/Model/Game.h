@@ -60,6 +60,9 @@ public:
     void updateStateIfWon();
     void checkState();
     int getSpeedLevel(int lvl);
+    int getTimeRemaining();
+    void setTimeStart();
+    int getTimeMax();
 };
 
 #endif // GAME_H
