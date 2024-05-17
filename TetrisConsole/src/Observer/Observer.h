@@ -7,7 +7,7 @@ class Observer
 
 public :
     virtual ~Observer() = default;
-    virtual void update();
+    virtual void update() = 0 ;
 };
 
 #endif // OBSERVER_H
