@@ -156,6 +156,7 @@ void MainWindow::paintEvent(QGraphicsScene *scene , const Board &board) const {
     int boardHeight = board.getHeight();
     int boardWidth = board.getWidth();
 
+    //taille en px/taille choisi du tab
     int cellWidth = ui->TetrisBoard->size().width()/boardWidth;
     int cellHeight= ui->TetrisBoard->size().height()/boardHeight;
 
@@ -165,7 +166,7 @@ void MainWindow::paintEvent(QGraphicsScene *scene , const Board &board) const {
      */
     for (int row = 0; row < board.getHeight(); ++row) {
         for (int col = 0; col < board.getWidth(); ++col) {
-            QGraphicsRectItem  *rect = scene->addRect(col * cellWidth, row * cellHeight, cellWidth, cellHeight);
+            QGraphicsRectItem  *rect = scene->addRect(col * cellWidth, row * cellHeight, cellWidth, cellHeight);//pour les placer dans la scene avec leur coordonnées
             // Determine the color based on the cell type
             QColor color;
             switch (board(row, col)) {
@@ -194,7 +195,7 @@ void MainWindow::paintEvent(QGraphicsScene *scene , const Board &board) const {
                 color = Qt::gray;
                 break;
             }
-            rect->setBrush(color);
+            rect->setBrush(color);//colorie le rectangle
         }
     }
 }

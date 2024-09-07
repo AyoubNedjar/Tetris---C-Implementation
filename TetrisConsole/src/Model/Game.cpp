@@ -36,17 +36,17 @@ void Game::setTimeStart(){
     startTime = time(nullptr);
 }
 
-void Game::insertBrickToBoard(){
+void Game::insertBrickToBoard(){//on insere au tt debut du plateau la nouvelle brique qui apparait
 
     listOfCurrentPositions = currentBrick->getPositionsTrue();
     Position inputPosition(0, board.getWidth()/2);
-    Position gapFromTheBoard((inputPosition.getX()-listOfCurrentPositions.front().getX()),
+    Position gapFromTheBoard((inputPosition.getX()-listOfCurrentPositions.front().getX()),//on a le decalage
                  (inputPosition.getY()-listOfCurrentPositions.front().getY()));
     //it calculates the distance between the brick's shape and the left border .
 
-    listOfCurrentPositions = brickPositionToBoardPosition(listOfCurrentPositions, gapFromTheBoard);
+    listOfCurrentPositions = brickPositionToBoardPosition(listOfCurrentPositions, gapFromTheBoard);//tranformation sur le board
     for(auto &posOfBrick : listOfCurrentPositions){
-        if(board.getType(posOfBrick) != CaseType::NOT_OCCUPIED){
+        if(board.getType(posOfBrick) != CaseType::NOT_OCCUPIED){//pour verifier si on est pas tt en haut
             setState(State::LOST);
         }
     }
@@ -83,12 +83,12 @@ void Game::nextShape(){
 int Game::moveBrick(Direction dir, bool WithDrop){
 
     Position posTemp;
-    Position delta = posTemp.getPositionFromDirection(dir);
+    Position delta = posTemp.getPositionFromDirection(dir);//decalage vers la direction
     int nbLineCompleted = 0;
     std::vector<Position> newPositionsAfterDirection;
 
     for(auto& posOfBrick :listOfCurrentPositions){
-        newPositionsAfterDirection.push_back(addGap(posOfBrick, delta));
+        newPositionsAfterDirection.push_back(addGap(posOfBrick, delta));//nouvelles positions mais verifier si il ya pas e collisions
     }
     /*
      * If the next positions don't have collisions and there is no collisions with the next ones . We then place the brick at
@@ -110,7 +110,7 @@ int Game::moveBrick(Direction dir, bool WithDrop){
      */
     if(!WithDrop){
         score += calculScore(nbLineCompleted , 0 , level);
-        notifyObservers();
+        notifyObservers();//c'etait pour eviter que a chaque booucle on montre la piece descendre directement , on veut qu'elle aparrait en bas directement
     }
     return nbLineCompleted ; //Returns the number of line completed after the move .
 }
@@ -181,6 +181,7 @@ bool Game::applyNewPositionsWhenValid(const std::vector<Position> &newPositions)
  */
 
 std::vector<Position> Game::posBeforeMoving(const std::vector<Position> &newPositionsInBoard)
+//on va seulement verifier si les posiitons qui se triuvent pas dans l'ancienne liste n'ont pas de collisions
 {
     std::vector<Position> realNewPositions;
 

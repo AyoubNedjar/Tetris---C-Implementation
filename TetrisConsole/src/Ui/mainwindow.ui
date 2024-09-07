@@ -301,8 +301,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <rect>
         <x>40</x>
         <y>30</y>
-        <width>600</width>
-        <height>500</height>
+        <width>400</width>
+        <height>525</height>
        </rect>
       </property>
      </widget>
@@ -489,7 +489,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <x>0</x>
      <y>0</y>
      <width>1214</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
